@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultura General 2025</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        // Registrar el Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/cultura-general-2025/service-worker.js', { scope: '/cultura-general-2025/' })
+                    .then(registration => {
+                        console.log('Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Fallo al registrar el Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Bienvenido a tu app de Oposiciones</h1>
+    <p>¡Esto es una simulación de tu libro de estudio PWA!</p>
+    <p>Si estás en el móvil, verás un banner para instalar la app.</p>
+    <p>Si la instalas, podrás acceder sin conexión a internet.</p>
+    <p id="status" style="color: green;">Estás en línea.</p>
+    <script>
+        // Código para mostrar el estado de la conexión
+        window.addEventListener('offline', () => {
+            document.getElementById('status').innerText = 'Estás sin conexión.';
+            document.getElementById('status').style.color = 'red';
+        });
+        window.addEventListener('online', () => {
+            document.getElementById('status').innerText = 'Estás en línea.';
+            document.getElementById('status').style.color = 'green';
+        });
+    </script>
+</body>
+</html>
