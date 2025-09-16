@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* NUEVA PALETA DE COLORES: Vibrante y moderna */
+            /* PALETA DE COLORES: Vibrante y moderna */
             --primary-color: #6a11cb;
             --secondary-color: #2575fc;
             --gradient-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -62,9 +62,11 @@
             max-width: 850px;
             margin: 30px auto;
             padding: 0 20px;
+            /* SOLUCIÓN: Añadimos un espacio inferior para que la barra de navegación no tape el contenido */
+            padding-bottom: 120px; 
         }
 
-        /* --- NUEVO: APARTADO DE IDEAS/CONSEJOS --- */
+        /* --- APARTADO DE IDEAS/CONSEJOS --- */
         .study-tips-card {
             background: var(--card-bg);
             border-radius: 15px;
@@ -100,7 +102,7 @@
             padding-bottom: 25px;
             border-bottom: 1px solid #e9ecef;
             animation: fadeIn 0.5s ease-out forwards;
-            opacity: 0; /* Inicia invisible para la animación */
+            opacity: 0; 
         }
         .question-item:last-child {
             border-bottom: none;
@@ -224,7 +226,6 @@
     </header>
 
     <div class="app-container">
-        <!-- NUEVO: Apartado de Consejos para el Estudio -->
         <div class="study-tips-card">
             <h2>💡 Consell del Dia</h2>
             <p><strong>Tècnica Pomodoro:</strong> Estudia intensament durant 25 minuts i després descansa 5. Després de 4 cicles, fes un descans més llarg de 15-30 minuts. Això millora la concentració i evita l'esgotament.</p>
@@ -237,7 +238,6 @@
         </div>
     </div>
 
-    <!-- NUEVO: Navegación de páginas funcional -->
     <div class="navigation">
         <button class="nav-btn" id="prevBtn">← Anterior</button>
         <div class="page-indicator" id="pageIndicator"></div>
@@ -245,7 +245,6 @@
     </div>
 
     <script>
-        // --- BASE DE DATOS DE PREGUNTAS (Todo el temario) ---
         const allQuestions = [
             // Página 1
             { id: 1, question: "Quina és la capital d'Austràlia?", answer: "Canberra" },
@@ -265,35 +264,28 @@
             { id: 13, question: "Quin instrument mesura la pressió atmosfèrica?", answer: "Baròmetre" },
             { id: 14, question: "Quina és la fórmula química de l'aigua?", answer: "H₂O" },
             { id: 15, question: "Qui va descobrir la penicil·lina?", answer: "Alexander Fleming" }
-            // Puedes añadir cientos de preguntas más aquí...
         ];
 
-        // --- CONFIGURACIÓN DE LA PAGINACIÓN ---
         let currentPage = 1;
         const questionsPerPage = 5;
         const totalPages = Math.ceil(allQuestions.length / questionsPerPage);
 
-        // --- ELEMENTOS DEL DOM ---
         const questionListDiv = document.getElementById('questionList');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const pageIndicator = document.getElementById('pageIndicator');
 
-        // --- FUNCIÓN PRINCIPAL PARA RENDERIZAR LAS PREGUNTAS ---
         function renderPage(page) {
-            // Vaciar la lista actual
             questionListDiv.innerHTML = '';
             
-            // Calcular qué preguntas mostrar
             const startIndex = (page - 1) * questionsPerPage;
             const endIndex = startIndex + questionsPerPage;
             const questionsToShow = allQuestions.slice(startIndex, endIndex);
 
-            // Crear y añadir cada pregunta al DOM
             questionsToShow.forEach((q, index) => {
                 const item = document.createElement('div');
                 item.className = 'question-item';
-                item.style.animationDelay = `${index * 100}ms`; // Animación escalonada
+                item.style.animationDelay = `${index * 100}ms`;
                 item.innerHTML = `
                     <div class="question-header">
                         <div class="question-number">${q.id}. ${q.question}</div>
@@ -304,7 +296,6 @@
                 questionListDiv.appendChild(item);
             });
 
-            // Añadir eventos a los botones recién creados
             document.querySelectorAll('.reveal-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const answerDiv = e.target.closest('.question-item').querySelector('.answer');
@@ -317,7 +308,6 @@
             updateNavigation();
         }
 
-        // --- FUNCIONES DE NAVEGACIÓN ---
         function updateNavigation() {
             pageIndicator.textContent = `Pàgina ${currentPage} de ${totalPages}`;
             prevBtn.disabled = currentPage === 1;
@@ -340,11 +330,9 @@
             }
         }
 
-        // --- EVENT LISTENERS ---
         prevBtn.addEventListener('click', goToPrevPage);
         nextBtn.addEventListener('click', goToNextPage);
 
-        // --- INICIALIZACIÓN DE LA APLICACIÓN ---
         document.addEventListener('DOMContentLoaded', () => {
             renderPage(currentPage);
         });
