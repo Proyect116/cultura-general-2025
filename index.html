@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preparación para Oposición en Ciberseguridad</title>
+    <title>Temario Oposiciones</title>
     <style>
         * {
             margin: 0;
@@ -175,21 +175,20 @@
     </div>
 
     <div class="app">
-        <h1>Preparación para Oposición en Ciberseguridad</h1>
+        <h1>Temario Oposiciones</h1>
         <div class="quiz">
-            <h2 id="question-text">Cargando...</h2>
+            <h2 id="question-text"></h2>
             <div id="answer-buttons"></div>
             <div class="navigation">
                 <button id="prev-btn" class="nav-btn">Atrás</button>
                 <span id="page-info" class="page-info"></span>
                 <button id="next-btn" class="nav-btn">Siguiente</button>
             </div>
-            <button id="restart-btn">Reiniciar Práctica</button>
+            <button id="restart-btn">Reiniciar</button>
         </div>
     </div>
 
     <script>
-        // Preguntas adaptadas para oposición
         const questions = [
             {
                 question: "¿Cuál es el propósito principal de un sistema de detección y respuesta en endpoints (EDR) en comparación con un antivirus tradicional?",
@@ -238,7 +237,6 @@
             }
         ];
 
-        // Elementos del DOM
         const questionElement = document.getElementById("question-text");
         const answerButtons = document.getElementById("answer-buttons");
         const nextButton = document.getElementById("next-btn");
@@ -252,7 +250,6 @@
         let answeredQuestions = new Array(questions.length).fill(false);
         let selectedAnswers = new Array(questions.length).fill(null);
 
-        // Verificar sesión y cargar contenido
         window.onload = function() {
             const username = localStorage.getItem('username');
             if (!username) {
@@ -263,13 +260,11 @@
             startQuiz();
         };
 
-        // Cerrar sesión
         document.getElementById('logoutButton').addEventListener('click', function() {
             localStorage.removeItem('username');
             window.location.href = 'index.html';
         });
 
-        // Iniciar la práctica
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
@@ -279,7 +274,6 @@
             showQuestion();
         }
 
-        // Mostrar pregunta actual
         function showQuestion() {
             resetState();
             let currentQuestion = questions[currentQuestionIndex];
@@ -303,14 +297,12 @@
             updateNavigation();
         }
 
-        // Resetear estado
         function resetState() {
             while (answerButtons.firstChild) {
                 answerButtons.removeChild(answerButtons.firstChild);
             }
         }
 
-        // Seleccionar respuesta
         function selectAnswer(index) {
             if (answeredQuestions[currentQuestionIndex]) return;
             const selectedBtn = answerButtons.children[index];
@@ -332,7 +324,6 @@
             updateNavigation();
         }
 
-        // Mostrar resultado final
         function showScore() {
             resetState();
             questionElement.innerHTML = `¡Has respondido correctamente a ${score} de ${questions.length} preguntas!`;
@@ -342,7 +333,6 @@
             restartButton.style.display = "block";
         }
 
-        // Actualizar navegación
         function updateNavigation() {
             pageInfo.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
             prevButton.disabled = currentQuestionIndex === 0;
@@ -350,7 +340,6 @@
             nextButton.textContent = currentQuestionIndex === questions.length - 1 ? "Finalizar" : "Siguiente";
         }
 
-        // Manejar botón "Siguiente"
         nextButton.addEventListener("click", () => {
             if (!answeredQuestions[currentQuestionIndex]) return;
             currentQuestionIndex++;
@@ -361,7 +350,6 @@
             }
         });
 
-        // Manejar botón "Atrás"
         prevButton.addEventListener("click", () => {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
@@ -369,7 +357,6 @@
             }
         });
 
-        // Manejar botón "Reiniciar"
         restartButton.addEventListener("click", startQuiz);
     </script>
 </body>
