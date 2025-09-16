@@ -16,348 +16,191 @@
             background-color: #f0f2f5;
             color: #333;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
         }
 
-        .user-info {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-info #welcomeMessage {
-            font-size: 16px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-
-        .logout-btn:hover {
-            background-color: #c82333;
-        }
-
-        .app {
+        .container {
             background: #fff;
             width: 90%;
-            max-width: 600px;
+            max-width: 400px;
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .app h1 {
-            font-size: 25px;
-            color: #007bff;
-            font-weight: 600;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 20px;
             text-align: center;
         }
 
-        .quiz {
-            padding: 20px 0;
+        .container h1 {
+            font-size: 25px;
+            color: #007bff;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
 
-        #question-text {
-            font-size: 18px;
-            color: #333;
-            font-weight: 500;
-            margin-bottom: 20px;
-            line-height: 1.5;
+        .container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 16px;
         }
 
         .btn {
-            background: #e9ecef;
-            color: #333;
+            background: #007bff;
+            color: #fff;
             font-weight: 500;
             width: 100%;
-            border: 1px solid #ced4da;
+            border: 0;
             padding: 12px;
             margin: 10px 0;
-            text-align: left;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .btn:hover:not([disabled]) {
-            background: #007bff;
-            color: #fff;
-        }
-
-        .btn:disabled {
-            cursor: not-allowed;
-        }
-
-        .btn.correct {
-            background: #28a745;
-            color: #fff;
-            border-color: #218838;
-        }
-
-        .btn.incorrect {
-            background: #dc3545;
-            color: #fff;
-            border-color: #c82333;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .nav-btn {
-            background: #007bff;
-            color: #fff;
-            font-weight: 500;
-            border: 0;
-            padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        .nav-btn:hover:not([disabled]) {
+        .btn:hover {
             background: #0056b3;
         }
 
-        .nav-btn:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
+        .toggle-link {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
         }
 
-        .page-info {
-            font-size: 16px;
-            color: #555;
+        .toggle-link:hover {
+            text-decoration: underline;
         }
 
-        #restart-btn {
-            background: #ffc107;
-            color: #333;
-            font-weight: 500;
-            border: 0;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 20px auto;
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        #register-form {
             display: none;
-        }
-
-        #restart-btn:hover {
-            background: #e0a800;
         }
     </style>
 </head>
 <body>
-    <div class="user-info">
-        <span id="welcomeMessage"></span>
-        <button id="logoutButton" class="logout-btn">Cerrar Sesión</button>
+    <div class="container" id="login-container">
+        <h1>Iniciar Sesión</h1>
+        <input type="text" id="login-username" placeholder="Nombre de usuario" required>
+        <input type="password" id="login-password" placeholder="Contraseña" required>
+        <button class="btn" onclick="login()">Iniciar Sesión</button>
+        <a href="#" class="forgot-password" onclick="forgotPassword()">¿Olvidaste tu contraseña?</a>
+        <a href="#" class="toggle-link" onclick="toggleForm()">Registrarse</a>
+        <div id="login-error" class="error"></div>
     </div>
 
-    <div class="app">
-        <h1>Temario Oposiciones</h1>
-        <div class="quiz">
-            <h2 id="question-text"></h2>
-            <div id="answer-buttons"></div>
-            <div class="navigation">
-                <button id="prev-btn" class="nav-btn">Atrás</button>
-                <span id="page-info" class="page-info"></span>
-                <button id="next-btn" class="nav-btn">Siguiente</button>
-            </div>
-            <button id="restart-btn">Reiniciar</button>
-        </div>
+    <div class="container" id="register-form">
+        <h1>Registrarse</h1>
+        <input type="text" id="register-username" placeholder="Nombre de usuario" required>
+        <input type="email" id="register-email" placeholder="Correo electrónico" required>
+        <input type="password" id="register-password" placeholder="Contraseña" required>
+        <button class="btn" onclick="register()">Registrarse</button>
+        <a href="#" class="toggle-link" onclick="toggleForm()">Iniciar Sesión</a>
+        <div id="register-error" class="error"></div>
     </div>
 
     <script>
-        const questions = [
-            {
-                question: "¿Cuál es el propósito principal de un sistema de detección y respuesta en endpoints (EDR) en comparación con un antivirus tradicional?",
-                answers: [
-                    { text: "Detección de virus, gusanos y troyanos.", correct: false },
-                    { text: "Interacción con otras herramientas de seguridad como SIEM o IPS/IDS.", correct: true },
-                    { text: "Incorporación de sistemas de mensajería instantánea.", correct: false },
-                    { text: "Mayor simplicidad en su despliegue y configuración.", correct: false }
-                ]
-            },
-            {
-                question: "Según las medidas de seguridad del Esquema Nacional de Seguridad, ¿en qué categoría de sistemas es obligatorio emplear cortafuegos de diferentes fabricantes en cascada?",
-                answers: [
-                    { text: "Sistemas de Categoría Básica o superior.", correct: false },
-                    { text: "Sistemas de Categoría Media o superior.", correct: false },
-                    { text: "Sistemas de Categoría Alta.", correct: true },
-                    { text: "No es un requisito obligatorio en ninguna categoría.", correct: false }
-                ]
-            },
-            {
-                question: "¿Qué entidad es responsable de crear el 'Authorization Grant' en el marco del protocolo OAuth 2.0?",
-                answers: [
-                    { text: "El cliente.", correct: false },
-                    { text: "El propietario del recurso.", correct: false },
-                    { text: "El servidor de autorización.", correct: true },
-                    { text: "El servidor del recurso.", correct: false }
-                ]
-            },
-            {
-                question: "¿Cuál de las siguientes afirmaciones sobre la gestión de incidentes de seguridad es correcta según la taxonomía de INCIBE?",
-                answers: [
-                    { text: "El robo se clasifica como un incidente de intrusión.", correct: false },
-                    { text: "La ingeniería social se clasifica como escaneo de redes.", correct: false },
-                    { text: "El análisis de paquetes (sniffing) se clasifica como intrusión.", correct: false },
-                    { text: "El escaneo de redes (scanning) se clasifica como intrusión.", correct: true }
-                ]
-            },
-            {
-                question: "¿Qué principio rector incluye la Estrategia Nacional de Ciberseguridad 2019 según la Orden PCI 487/2019?",
-                answers: [
-                    { text: "Gestión de Riesgos y Continuidad de Operaciones.", correct: false },
-                    { text: "Unidad de Acción, Anticipación, Eficiencia y Resiliencia.", correct: true },
-                    { text: "Formación, Prevención y Liderazgo Tecnológico.", correct: false },
-                    { text: "Garantía de derechos y Concienciación.", correct: false }
-                ]
-            }
-        ];
+        function toggleForm() {
+            const loginForm = document.getElementById('login-container');
+            const registerForm = document.getElementById('register-form');
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
+        }
 
-        const questionElement = document.getElementById("question-text");
-        const answerButtons = document.getElementById("answer-buttons");
-        const nextButton = document.getElementById("next-btn");
-        const prevButton = document.getElementById("prev-btn");
-        const restartButton = document.getElementById("restart-btn");
-        const pageInfo = document.getElementById("page-info");
-        const welcomeMessage = document.getElementById("welcomeMessage");
+        function register() {
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const errorMessage = document.getElementById('register-error');
 
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let answeredQuestions = new Array(questions.length).fill(false);
-        let selectedAnswers = new Array(questions.length).fill(null);
-
-        window.onload = function() {
-            const username = localStorage.getItem('username');
-            if (!username) {
-                window.location.href = 'index.html';
+            if (!username || !email || !password) {
+                errorMessage.textContent = 'Por favor, completa todos los campos.';
                 return;
             }
-            welcomeMessage.textContent = `Bienvenido, ${username}!`;
-            startQuiz();
-        };
 
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            localStorage.removeItem('username');
-            window.location.href = 'index.html';
-        });
-
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            answeredQuestions.fill(false);
-            selectedAnswers.fill(null);
-            restartButton.style.display = "none";
-            showQuestion();
-        }
-
-        function showQuestion() {
-            resetState();
-            let currentQuestion = questions[currentQuestionIndex];
-            questionElement.innerHTML = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
-
-            currentQuestion.answers.forEach((answer, index) => {
-                const button = document.createElement("button");
-                button.innerHTML = answer.text;
-                button.classList.add("btn");
-                if (answer.correct) {
-                    button.dataset.correct = answer.correct;
-                }
-                if (selectedAnswers[currentQuestionIndex] === index) {
-                    button.classList.add(answer.correct ? "correct" : "incorrect");
-                    button.disabled = true;
-                }
-                button.addEventListener("click", () => selectAnswer(index));
-                answerButtons.appendChild(button);
-            });
-
-            updateNavigation();
-        }
-
-        function resetState() {
-            while (answerButtons.firstChild) {
-                answerButtons.removeChild(answerButtons.firstChild);
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.find(user => user.username === username)) {
+                errorMessage.textContent = 'El usuario ya existe.';
+                return;
             }
+
+            users.push({ username, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Registro exitoso. Ahora inicia sesión.');
+            toggleForm();
         }
 
-        function selectAnswer(index) {
-            if (answeredQuestions[currentQuestionIndex]) return;
-            const selectedBtn = answerButtons.children[index];
-            const isCorrect = selectedBtn.dataset.correct === "true";
-            if (isCorrect) {
-                selectedBtn.classList.add("correct");
-                score++;
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const errorMessage = document.getElementById('login-error');
+
+            if (!username || !password) {
+                errorMessage.textContent = 'Por favor, completa todos los campos.';
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                localStorage.setItem('username', username);
+                window.location.href = 'quiz.html';
             } else {
-                selectedBtn.classList.add("incorrect");
+                errorMessage.textContent = 'Credenciales incorrectas.';
             }
-            Array.from(answerButtons.children).forEach((button, i) => {
-                if (button.dataset.correct === "true") {
-                    button.classList.add("correct");
+        }
+
+        function forgotPassword() {
+            const email = prompt('Ingresa tu correo electrónico para restablecer la contraseña:');
+            if (email) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.email === email);
+                if (userIndex !== -1) {
+                    const newPassword = prompt('Ingresa una nueva contraseña:');
+                    if (newPassword) {
+                        users[userIndex].password = newPassword;
+                        localStorage.setItem('users', JSON.stringify(users));
+                        alert('Contraseña restablecida exitosamente.');
+                    }
+                } else {
+                    alert('Correo no registrado.');
                 }
-                button.disabled = true;
-            });
-            answeredQuestions[currentQuestionIndex] = true;
-            selectedAnswers[currentQuestionIndex] = index;
-            updateNavigation();
-        }
-
-        function showScore() {
-            resetState();
-            questionElement.innerHTML = `¡Has respondido correctamente a ${score} de ${questions.length} preguntas!`;
-            nextButton.style.display = "none";
-            prevButton.style.display = "none";
-            pageInfo.style.display = "none";
-            restartButton.style.display = "block";
-        }
-
-        function updateNavigation() {
-            pageInfo.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
-            prevButton.disabled = currentQuestionIndex === 0;
-            nextButton.disabled = !answeredQuestions[currentQuestionIndex];
-            nextButton.textContent = currentQuestionIndex === questions.length - 1 ? "Finalizar" : "Siguiente";
-        }
-
-        nextButton.addEventListener("click", () => {
-            if (!answeredQuestions[currentQuestionIndex]) return;
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion();
             } else {
-                showScore();
+                alert('Por favor, ingresa un correo válido.');
+            }
+        }
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (document.getElementById('login-container').style.display !== 'none') {
+                    login();
+                } else {
+                    register();
+                }
             }
         });
-
-        prevButton.addEventListener("click", () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showQuestion();
-            }
-        });
-
-        restartButton.addEventListener("click", startQuiz);
     </script>
 </body>
 </html>
