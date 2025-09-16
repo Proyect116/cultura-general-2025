@@ -1,1181 +1,322 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1E88E5">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Cultura General">
-    
-    <title>Temari Oposicions - Cultura General</title>
-    
-    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSIjMUU4OEU1IiByeD0iMjQiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OS04LTggOHptLjUtMTNIOXYyaDJ2Nmgtdi0yaDJ2Mmg0di0yaDJ2LTJoLTJ2LTZoMnYtMmgtNHYyeiIvPgo8L3N2Zz4KPC9zdmc+">
-    
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVGVtYXJpIE9wb3NpY2lvbnMgLSBDdWx0dXJhIEdlbmVyYWwiLCJzaG9ydF9uYW1lIjoiVGVtYXJpIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGQUZBRkEiLCJ0aGVtZV9jb2xvciI6IiMxRTg4RTUiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
-
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    
+    <title>Quiz de Seguridad</title>
     <style>
         * {
             margin: 0;
             padding: 0;
+            font-family: 'Poppins', sans-serif;
             box-sizing: border-box;
         }
 
-        :root {
-            --text-color: #333333;
-            --background-color: #FAFAFA;
-            --card-background: #ffffff;
-            --primary-color: #1E88E5;
-            --secondary-color: #FF7043;
-            --positive-color: #81C784;
-            --progress-color: #2c974b;
-            --button-bg: #1E88E5;
-            --button-hover: #1976D2;
-        }
-        
-        .dark-mode {
-            --text-color: #e0e0e0;
-            --background-color: #121212;
-            --card-background: #1f1f1f;
-            --primary-color: #64B5F6;
-            --secondary-color: #FFB74D;
-            --positive-color: #AED581;
-            --progress-color: #4CAF50;
-            --button-bg: #616161;
-            --button-hover: #424242;
-        }
-        
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-        
-        /* PWA Install Banner */
-        .install-banner {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #1976D2 50%, #0D47A1 100%);
-            color: white;
-            padding: 16px 20px;
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 200;
-            animation: slideDown 0.6s ease;
-            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
-        }
-        
-        .install-banner.show {
+            background-color: #f0f2f5;
+            color: #333;
             display: flex;
-        }
-        
-        .install-text {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 15px;
-            font-weight: 500;
-        }
-        
-        .install-btn {
-            background: white;
-            color: var(--primary-color);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(255,255,255,0.3);
-        }
-        
-        .install-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255,255,255,0.4);
-        }
-        
-        .close-banner {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .close-banner:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        /* Header principal con tu estilo */
-        .main-header {
-            background: linear-gradient(135deg, var(--background-color) 0%, var(--background-color) 100%);
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 3px solid var(--primary-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            display: none; /* Inicialmente oculto */
-        }
-        .main-header.show {
-            display: block;
-        }
-        
-        .main-title {
-            font-family: 'Lora', serif;
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(30, 136, 229, 0.1);
-        }
-
-        .main-subtitle {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 16px;
-            color: var(--primary-color);
-            margin-bottom: 16px;
-            opacity: 0.9;
-        }
-        .page-info {
-            font-size: 14px;
-            color: var(--text-color);
-            margin-bottom: 8px;
-        }
-        .page-number-header {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--secondary-color);
-            text-shadow: 0 1px 3px rgba(255, 112, 67, 0.2);
-        }
-
-        /* Contenedor principal del quiz */
-        .quiz-container {
-            background: var(--background-color);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+            align-items: center;
             min-height: 100vh;
-            display: none; /* Inicialmente oculto */
-        }
-        .quiz-container.show {
-            display: block;
-        }
-
-        /* Nuevo: Contenedor de autenticación */
-        .auth-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: var(--background-color);
-            text-align: center;
             padding: 20px;
         }
 
-        .auth-box {
-            background: var(--card-background);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            border: 1px solid rgba(30, 136, 229, 0.1);
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .auth-box h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        .auth-box input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        .user-info #welcomeMessage {
             font-size: 16px;
-            transition: all 0.3s ease;
-            background: var(--background-color);
-            color: var(--text-color);
-        }
-
-        .auth-box input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 8px rgba(30, 136, 229, 0.2);
-        }
-
-        .auth-box button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            background-color: var(--primary-color);
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .auth-box button:hover {
-            background-color: var(--button-hover);
-            transform: translateY(-2px);
-        }
-
-        .auth-toggle {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .auth-toggle a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .auth-toggle a:hover {
-            color: var(--button-hover);
+            font-weight: 500;
+            color: #555;
         }
 
         .logout-btn {
-            background: none;
+            background-color: #dc3545;
+            color: #fff;
             border: none;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: color 0.3s;
-            display: none; /* Inicialmente oculto */
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
-        .logout-btn.show {
-            display: block;
-        }
+
         .logout-btn:hover {
-            color: #ff0000;
+            background-color: #c82333;
         }
-        
-        /* Lista de preguntas con tu estilo mejorado */
-        .question-list {
-            background: var(--card-background);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(30, 136, 229, 0.1);
-        }
-        
-        .question-item {
-            margin-bottom: 32px;
-            padding: 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .question-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(30, 136, 229, 0.03) 0%, rgba(129, 199, 132, 0.02) 100%);
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: 1;
-        }
-        
-        .question-item:hover::before {
-            opacity: 1;
-        }
-        
-        .question-item:hover {
-            border-color: rgba(30, 136, 229, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(30, 136, 229, 0.15);
-        }
-        
-        .question-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .question-number {
-            color: var(--primary-color);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .question-number::before {
-            content: '💡';
-            font-size: 18px;
-            animation: pulse 2s infinite;
-        }
-        
-        .question-text {
-            color: var(--text-color);
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-        
-        .answer {
-            color: #8E8E93;
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 0;
-        }
-        
-        .answer.show {
-            opacity: 1;
-            max-height: 120px;
-            margin-top: 16px;
-            color: var(--secondary-color);
-            font-weight: 600;
-            background: linear-gradient(135deg, rgba(255, 112, 67, 0.1) 0%, rgba(255, 112, 67, 0.05) 100%);
-            padding: 16px 20px;
+
+        .app {
+            background: #fff;
+            width: 90%;
+            max-width: 600px;
             border-radius: 10px;
-            border-left: 4px solid var(--secondary-color);
-            box-shadow: 0 3px 12px rgba(255, 112, 67, 0.2);
-            position: relative;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        .answer.show::before {
-            content: '✓';
-            position: absolute;
-            right: 16px;
-            top: 16px;
-            color: var(--secondary-color);
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        /* Botones de acción mejorados */
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-            opacity: 0;
-            transition: all 0.4s ease;
-            position: relative;
-            z-index: 3;
-        }
-        
-        .question-item:hover .action-buttons {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .reveal-btn {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #1976D2 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 14px;
+
+        .app h1 {
+            font-size: 25px;
+            color: #007bff;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
-            position: relative;
-            overflow: hidden;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+            text-align: center;
         }
-        
-        .reveal-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+
+        .quiz {
+            padding: 20px 0;
+        }
+
+        #question-text {
+            font-size: 18px;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: #e9ecef;
+            color: #333;
+            font-weight: 500;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: all 0.6s ease;
-        }
-        
-        .reveal-btn:hover::before {
-            left: 100%;
-        }
-        
-        .reveal-btn:hover {
-            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(30, 136, 229, 0.4);
-        }
-        
-        .reveal-btn.hide {
-            background: linear-gradient(135deg, var(--secondary-color) 0%, #F4511E 100%);
-            box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3);
-        }
-        
-        .reveal-btn.hide:hover {
-            background: linear-gradient(135deg, #F4511E 0%, #D84315 100%);
-            box-shadow: 0 6px 16px rgba(255, 112, 67, 0.4);
-        }
-        
-        /* Separador mejorado */
-        .separator {
-            margin: 40px 0;
-            text-align: center;
-            position: relative;
-        }
-        
-        .separator-line {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--positive-color), transparent);
-            margin: 15px 0;
-            position: relative;
-        }
-        
-        .separator-line::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--positive-color), #66BB6A);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .separator-text {
-            color: var(--positive-color);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: var(--background-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(129, 199, 132, 0.2);
-        }
-        
-        /* Navegación flotante mejorada */
-        .navigation {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none; /* Inicialmente oculto */
-            gap: 12px;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
+            border: 1px solid #ced4da;
             padding: 12px;
-            border-radius: 30px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-            border: 1px solid rgba(255,255,255,0.3);
-            transition: background 0.4s ease;
-        }
-        .navigation.show {
-            display: flex;
-        }
-        
-        .nav-btn {
-            background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
+            margin: 10px 0;
+            text-align: left;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .nav-btn.reset-btn {
-            background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
-            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+        .btn:hover:not([disabled]) {
+            background: #007bff;
+            color: #fff;
         }
-        
-        .nav-btn:hover {
-            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+
+        .btn:disabled {
+            cursor: no-drop;
         }
-        
-        .nav-btn.reset-btn:hover {
-            background: linear-gradient(135deg, #D70015 0%, #A2000C 100%);
-            box-shadow: 0 6px 20px rgba(255, 59, 48, 0.4);
+
+        .btn.correct {
+            background: #28a745;
+            color: #fff;
+            border-color: #218838;
         }
-        
-        .nav-btn:disabled {
-            background: linear-gradient(135deg, #ccc 0%, #999 100%);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+        .btn.incorrect {
+            background: #dc3545;
+            color: #fff;
+            border-color: #c82333;
         }
-        
-        /* Página flotante mejorada */
-        .page-number {
-            position: fixed;
-            bottom: 120px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, #F4511E 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: none; /* Inicialmente oculto */
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 6px 20px rgba(255, 112, 67, 0.4);
-            border: 3px solid rgba(255,255,255,0.3);
-        }
-        .page-number.show {
-            display: flex;
-        }
-        
-        .page-number:hover {
-            transform: scale(1.15);
-            box-shadow: 0 8px 25px rgba(255, 112, 67, 0.5);
-        }
-        
-        /* Animaciones */
-        @keyframes slideDown { 
-            from { 
-                transform: translateY(-100%); 
-                opacity: 0;
-            }
-            to { 
-                transform: translateY(0); 
-                opacity: 1;
-            }
-        }
-        
-        @keyframes pulse { 
-            0%, 100% { 
-                transform: scale(1); 
-                opacity: 1;
-            }
-            50% { 
-                transform: scale(1.1); 
-                opacity: 0.8;
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Responsive */
-        @media (min-width: 768px) {
-            .main-title {
-                font-size: 36px;
-            }
-            
-            .main-subtitle {
-                font-size: 18px;
-            }
-            
-            .question-item {
-                padding: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .quiz-container {
-                padding: 10px;
-            }
-            
-            .question-list {
-                padding: 20px;
-            }
-            
-            .navigation {
-                bottom: 20px;
-                padding: 8px;
-            }
-            
-            .nav-btn {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            
-            .page-number {
-                width: 50px;
-                height: 50px;
-                bottom: 100px;
-                right: 20px;
-            }
-        }
-        
-        /* Offline indicator mejorado */
-        .offline-indicator {
-            background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
-            color: white;
+
+        #next-btn {
+            background: #007bff;
+            color: #fff;
+            font-weight: 500;
+            width: 150px;
+            border: 0;
             padding: 12px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            display: none;
-            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
-        }
-        
-        .offline-indicator.show {
+            margin: 20px auto 0;
+            border-radius: 6px;
+            cursor: pointer;
             display: block;
-            animation: slideDown 0.5s ease;
+            transition: background-color 0.3s;
         }
 
-        /* Nuevo: Barra de progreso */
-        .progress-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 15px;
+        #next-btn:hover {
+            background: #0056b3;
         }
 
-        .progress-percentage {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--progress-color);
-            text-shadow: 0 1px 3px rgba(44, 151, 75, 0.2);
-        }
-        
-        .progress-bar-container {
-            width: 80%;
-            max-width: 400px;
-            height: 8px;
-            background-color: var(--card-background);
-            border-radius: 4px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background-color: var(--progress-color);
-            transition: width 0.3s ease-in-out;
-            border-radius: 4px;
-        }
-        
-        .dark-mode-toggle {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-        
-        .dark-mode-toggle:hover {
-            background-color: var(--button-hover);
+        #next-btn.hide {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="install-banner" id="installBanner">
-        <div class="install-text">
-            <span>📱</span>
-            <span>Instala l'app per estudiar offline</span>
-        </div>
-        <div>
-            <button class="install-btn" id="installBtn">Instal·lar App</button>
-            <button class="close-banner" id="closeBanner">×</button>
-        </div>
+
+    <div class="user-info">
+        <span id="welcomeMessage"></span>
+        <button id="logoutButton" class="logout-btn">Cerrar Sesión</button>
     </div>
-    
-    <div class="offline-indicator" id="offlineIndicator">
-        📡 Mode offline - Contingut guardat localment
-    </div>
-    
-    <div id="authContainer" class="auth-container">
-        <div class="auth-box">
-            <h2 id="authTitle">Iniciar Sesión</h2>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button id="authButton">Iniciar Sesión</button>
-            <p class="auth-toggle">
-                ¿No tienes cuenta? <a href="#" id="toggleLink">Regístrate</a>
-            </p>
+
+    <div class="app">
+        <h1>Quiz de Seguridad</h1>
+        <div class="quiz">
+            <h2 id="question-text">Pregunta...</h2>
+            <div id="answer-buttons">
+                <button class="btn">Respuesta 1</button>
+                <button class="btn">Respuesta 2</button>
+                <button class="btn">Respuesta 3</button>
+                <button class="btn">Respuesta 4</button>
+            </div>
+            <button id="next-btn">Siguiente</button>
         </div>
     </div>
 
-    <div class="main-header">
-        <h1 class="main-title">Temari Oposicions</h1>
-        <div class="main-subtitle">Cultura General</div>
-        <div class="page-info">Pàgina <span id="pageNumberHeader">4</span> de 101</div>
-        
-        <div class="progress-info">
-            <div class="progress-percentage" id="progressPercentage">0%</div>
-            <div class="progress-bar-container">
-                <div class="progress-bar-fill" id="progressBarFill"></div>
-            </div>
-        </div>
-        <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
-    </div>
-    
-    <div class="quiz-container">
-        <div class="question-list" id="questionList">
-            
-            <div class="question-item" data-question-id="32">
-                <div class="question-content">
-                    <div class="question-number">32. Brasília és a Brasil com Albània és a...</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-32">Tirana</div>
-            </div>
-        </div>
-            
-            <div class="question-item" data-question-id="33">
-                <div class="question-content">
-                    <div class="question-number">33. Quin és el nom de la muntanya més alta d'Espanya?</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-33">Teide</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="34">
-                <div class="question-content">
-                    <div class="question-number">34. Quin és el país d'origen del "Programa Apollo"?</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-34">Estats Units d'Amèrica</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="35">
-                <div class="question-content">
-                    <div class="question-number">35. A quin estat pertany la regió insular de Còrsega?</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-35">França</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="36">
-                <div class="question-content">
-                    <div class="question-number">36. Tegucigalpa és la capital de:</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-36">Hondures</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="37">
-                <div class="question-content">
-                    <div class="question-number">37. L'autor del llibre "La Colmena" és de:</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-37">Camilo José Cela</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="38">
-                <div class="question-content">
-                    <div class="question-number">38. La proclamació de la 2a República Espanyola va ser al:</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-38">1931</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="39">
-                <div class="question-content">
-                    <div class="question-number">39. Quin Nobel d'escriptura castellana ha finat recentment?</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-39">Mario Vargas Llosa</div>
-                </div>
-            </div>
-            
-            <div class="question-item" data-question-id="40">
-                <div class="question-content">
-                    <div class="question-number">40. Els propers JJOO es celebren a:</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Pensar respuesta</button>
-                    </div>
-                    <div class="answer" id="answer-40">Los Ángeles</div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    
-    <div class="navigation">
-        <button class="nav-btn" onclick="previousPage()" id="prevBtn">← Anterior</button>
-        <button class="nav-btn reset-btn" onclick="resetProgress()">🔄 Reiniciar</button>
-        <button class="nav-btn" onclick="nextPage()" id="nextBtn">Següent →</button>
-        <button class="nav-btn dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
-    </div>
-    
-    <div class="page-number" id="pageNumber">4</div>
-    
-    <script type="module">
-        // Importa las funciones necesarias del SDK de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-
-        // Tu configuración de la aplicación web de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBwBaThAwh-QDyH9XQDY4Ef03LMX9z4xXM",
-            authDomain: "temari-oposicions.firebaseapp.com",
-            projectId: "temari-oposicions",
-            storageBucket: "temari-oposicions.firebasestorage.app",
-            messagingSenderId: "795136368588",
-            appId: "1:795136368588:web:359df54bb55555275ac769",
-            measurementId: "G-V3QL2VWYPT"
+    <script>
+        // Lógica de sesión
+        window.onload = function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('welcomeMessage').textContent = `Bienvenido, ${username}!`;
+            } else {
+                window.location.href = 'index.html'; // Redirige si no hay sesión iniciada
+            }
         };
-        
-        // Inicializa Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
 
-        // --- 2. LÓGICA DE AUTENTICACIÓN ---
-        const authContainer = document.getElementById('authContainer');
-        const mainHeader = document.querySelector('.main-header');
-        const quizContainer = document.querySelector('.quiz-container');
-        const navigation = document.querySelector('.navigation');
-        const pageNumberElement = document.getElementById('pageNumber');
-        const authTitle = document.getElementById('authTitle');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const authButton = document.getElementById('authButton');
-        const toggleLink = document.getElementById('toggleLink');
-        const logoutBtn = document.getElementById('logoutBtn');
-        
-        let isLogin = true;
-
-        toggleLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            isLogin = !isLogin;
-            if (isLogin) {
-                authTitle.innerText = 'Iniciar Sesión';
-                authButton.innerText = 'Iniciar Sesión';
-                toggleLink.innerText = 'Regístrate';
-            } else {
-                authTitle.innerText = 'Registrarse';
-                authButton.innerText = 'Registrarse';
-                toggleLink.innerText = 'Iniciar Sesión';
-            }
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('username');
+            window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
         });
 
-        authButton.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            
-            if (isLogin) {
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        console.log('¡Sesión iniciada correctamente!', userCredential.user);
-                    })
-                    .catch((error) => {
-                        alert('Error al iniciar sesión: ' + error.message);
-                    });
-            } else {
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        console.log('¡Registro exitoso!', userCredential.user);
-                    })
-                    .catch((error) => {
-                        alert('Error al registrarse: ' + error.message);
-                    });
-            }
-        });
-        
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth).then(() => {
-                console.log('Sesión cerrada correctamente');
-            }).catch((error) => {
-                console.error('Error al cerrar sesión:', error);
-            });
-        });
+        // Definición de las preguntas del quiz
+        const questions = [
+            {
+                question: "¿Qué es el 'phishing'?",
+                answers: [
+                    { text: "Un tipo de virus informático.", correct: false },
+                    { text: "Un método para robar información personal, como contraseñas, a través de correos electrónicos falsos.", correct: true },
+                    { text: "Una técnica de programación.", correct: false },
+                    { text: "Un tipo de firewall.", correct: false }
+                ]
+            },
+            {
+                question: "¿Cuál de las siguientes es una contraseña segura?",
+                answers: [
+                    { text: "123456", correct: false },
+                    { text: "password123", correct: false },
+                    { text: "MiNombre1!", correct: false },
+                    { text: "G00gl3-S3cur3-Pa$$w0rd", correct: true }
+                ]
+            },
+            {
+                question: "¿Qué medida de seguridad es fundamental para proteger tu red Wi-Fi en casa?",
+                answers: [
+                    { text: "Dejarla sin contraseña para un acceso fácil.", correct: false },
+                    { text: "Utilizar un nombre de red (SSID) muy común.", correct: false },
+                    { text: "Cambiar la contraseña por defecto del router y usar una encriptación fuerte (WPA3).", correct: true },
+                    { text: "Compartir la contraseña con todos los vecinos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es la autenticación de dos factores (2FA)?",
+                answers: [
+                    { text: "Iniciar sesión con tu nombre de usuario y contraseña dos veces.", correct: false },
+                    { text: "Un método de seguridad que requiere dos formas de verificación para acceder a una cuenta.", correct: true },
+                    { text: "Usar dos navegadores diferentes para iniciar sesión.", correct: false },
+                    { text: "Compartir tu contraseña con dos amigos de confianza.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué tipo de software se instala sin tu conocimiento y roba información personal?",
+                answers: [
+                    { text: "Antivirus.", correct: false },
+                    { text: "Firewall.", correct: false },
+                    { text: "Malware (software malicioso).", correct: true },
+                    { text: "Sistema operativo.", correct: false }
+                ]
+            },
+        ];
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authContainer.style.display = 'none';
-                mainHeader.classList.add('show');
-                quizContainer.classList.add('show');
-                navigation.classList.add('show');
-                pageNumberElement.classList.add('show');
-                logoutBtn.classList.add('show');
-            } else {
-                authContainer.style.display = 'flex';
-                mainHeader.classList.remove('show');
-                quizContainer.classList.remove('show');
-                navigation.classList.remove('show');
-                pageNumberElement.classList.remove('show');
-                logoutBtn.classList.remove('show');
-            }
-        });
-        
-        // --- 3. LÓGICA DEL QUIZ (sin cambios) ---
+        // Asignación de elementos del DOM a variables
+        const questionElement = document.getElementById("question-text");
+        const answerButtons = document.getElementById("answer-buttons");
+        const nextButton = document.getElementById("next-btn");
 
-        const questionsPerPage = 10;
-        let currentPage = 1;
-        let totalPages = 0;
-        let questions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
 
-        async function fetchQuestions() {
-            try {
-                const response = await fetch('temari.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+        // Función para iniciar el quiz
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.innerHTML = "Siguiente";
+            showQuestion();
+        }
+
+        // Función para mostrar la pregunta actual
+        function showQuestion() {
+            resetState();
+            let currentQuestion = questions[currentQuestionIndex];
+            let questionNo = currentQuestionIndex + 1;
+            questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                answerButtons.appendChild(button);
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
                 }
-                const data = await response.json();
-                questions = data;
-                totalPages = Math.ceil(questions.length / questionsPerPage);
-                renderQuestions();
-                updatePageInfo();
-                updateProgressBar();
-            } catch (e) {
-                console.error("Error fetching or parsing questions:", e);
-                document.getElementById('questionList').innerHTML = `<p style="text-align: center; color: var(--secondary-color);">No se pudo cargar el temario. Inténtalo de nuevo más tarde.</p>`;
-            }
-        }
-
-        function renderQuestions() {
-            const questionList = document.getElementById('questionList');
-            const startIndex = (currentPage - 1) * questionsPerPage;
-            const endIndex = startIndex + questionsPerPage;
-            const questionsToRender = questions.slice(startIndex, endIndex);
-
-            let html = '';
-            questionsToRender.forEach(q => {
-                html += `
-                    <div class="question-item" data-question-id="${q.id}">
-                        <div class="question-content">
-                            <div class="question-number">${q.id}. ${q.question}</div>
-                            <div class="action-buttons">
-                                <button class="reveal-btn">🤔 Pensar respuesta</button>
-                            </div>
-                            <div class="answer" id="answer-${q.id}">${q.answer}</div>
-                        </div>
-                    </div>
-                `;
-            });
-            questionList.innerHTML = html;
-
-            document.querySelectorAll('.reveal-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const questionItem = e.target.closest('.question-item');
-                    const answer = questionItem.querySelector('.answer');
-                    const questionId = questionItem.dataset.questionId;
-                    
-                    if (answer.classList.contains('show')) {
-                        answer.classList.remove('show');
-                        button.textContent = '🤔 Pensar respuesta';
-                        button.classList.remove('hide');
-                        updateProgress(questionId, false);
-                    } else {
-                        answer.classList.add('show');
-                        button.textContent = 'Ocultar respuesta';
-                        button.classList.add('hide');
-                        updateProgress(questionId, true);
-                    }
-                });
+                button.addEventListener("click", selectAnswer);
             });
         }
-        
-        function updatePageInfo() {
-            const pageInfo = document.getElementById('pageNumberHeader');
-            const pageFloat = document.getElementById('pageNumber');
-            
-            if (pageInfo) pageInfo.textContent = currentPage;
-            if (pageFloat) pageFloat.textContent = currentPage;
 
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            if (prevBtn) prevBtn.disabled = currentPage === 1;
-            if (nextBtn) nextBtn.disabled = currentPage === totalPages;
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderQuestions();
-                updatePageInfo();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Función para resetear el estado y ocultar los botones
+        function resetState() {
+            nextButton.style.display = "none";
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
             }
         }
 
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderQuestions();
-                updatePageInfo();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Función para manejar la selección de una respuesta
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === "true";
+            if (isCorrect) {
+                selectedBtn.classList.add("correct");
+                score++;
+            } else {
+                selectedBtn.classList.add("incorrect");
             }
-        }
-
-        // --- 4. LÓGICA DE PROGRESO Y ALMACENAMIENTO LOCAL ---
-        function getProgress() {
-            return JSON.parse(localStorage.getItem('quizProgress')) || {};
-        }
-
-        function saveProgress(progress) {
-            localStorage.setItem('quizProgress', JSON.stringify(progress));
-        }
-
-        function updateProgress(questionId, isRevealed) {
-            let progress = getProgress();
-            progress[questionId] = isRevealed;
-            saveProgress(progress);
-            updateProgressBar();
-        }
-
-        function resetProgress() {
-            if (confirm('¿Estás seguro de que quieres reiniciar tu progreso?')) {
-                localStorage.removeItem('quizProgress');
-                updateProgressBar();
-                renderQuestions();
-                alert('Progreso reiniciado.');
-            }
-        }
-
-        function updateProgressBar() {
-            const totalQuestions = questions.length;
-            const progress = getProgress();
-            const revealedCount = Object.values(progress).filter(p => p).length;
-            const percentage = totalQuestions > 0 ? Math.round((revealedCount / totalQuestions) * 100) : 0;
-            
-            document.getElementById('progressPercentage').textContent = `${percentage}%`;
-            document.getElementById('progressBarFill').style.width = `${percentage}%`;
-        }
-        
-        // --- 5. LÓGICA DE PWA (sin cambios) ---
-        let deferredPrompt;
-        const installBanner = document.getElementById('installBanner');
-        const installBtn = document.getElementById('installBtn');
-        const closeBanner = document.getElementById('closeBanner');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBanner.classList.add('show');
-        });
-
-        installBtn.addEventListener('click', () => {
-            installBanner.style.display = 'none';
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('El usuario aceptó instalar la PWA');
-                    } else {
-                        console.log('El usuario rechazó instalar la PWA');
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        });
-
-        closeBanner.addEventListener('click', () => {
-            installBanner.style.display = 'none';
-        });
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('Service Worker registrado con éxito:', registration);
-                    })
-                    .catch(error => {
-                        console.log('Fallo el registro del Service Worker:', error);
-                    });
+            Array.from(answerButtons.children).forEach(button => {
+                if (button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                }
+                button.disabled = true;
             });
+            nextButton.style.display = "block";
         }
-        
-        window.addEventListener('online', () => {
-            document.getElementById('offlineIndicator').classList.remove('show');
-        });
 
-        window.addEventListener('offline', () => {
-            document.getElementById('offlineIndicator').classList.add('show');
-        });
-        
-        // Lógica para el modo oscuro (sin cambios)
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            localStorage.setItem('darkMode', isDarkMode);
-            document.querySelector('.dark-mode-toggle').textContent = isDarkMode ? '☀️' : '🌙';
+        // Función para mostrar el resultado final
+        function showScore() {
+            resetState();
+            questionElement.innerHTML = `¡Has respondido correctamente a ${score} de ${questions.length} preguntas!`;
+            nextButton.innerHTML = "Reiniciar Quiz";
+            nextButton.style.display = "block";
         }
-        
-        function loadDarkModePreference() {
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-                document.querySelector('.dark-mode-toggle').textContent = '☀️';
+
+        // Función para manejar el botón "Siguiente" o "Reiniciar"
+        function handleNextButton() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showScore();
             }
         }
-        
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDarkModePreference();
-            fetchQuestions();
+
+        nextButton.addEventListener("click", () => {
+            if (currentQuestionIndex < questions.length) {
+                handleNextButton();
+            } else {
+                startQuiz();
+            }
         });
-        
-        // Funciones globales para los botones de navegación
-        window.nextPage = nextPage;
-        window.previousPage = previousPage;
-        window.resetProgress = resetProgress;
-        window.toggleDarkMode = toggleDarkMode;
+
+        // Iniciar el quiz al cargar la página
+        startQuiz();
     </script>
 </body>
 </html>
