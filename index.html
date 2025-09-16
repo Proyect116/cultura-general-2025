@@ -930,94 +930,252 @@
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         console.log('¡Registro exitoso!', userCredential.user);
-                        alert('¡Registro exitoso! Ya puedes iniciar sesión.');
-                        isLogin = true;
-                        authTitle.innerText = 'Iniciar Sesión';
-                        authButton.innerText = 'Iniciar Sesión';
-                        toggleLink.innerText = 'Regístrate';
                     })
                     .catch((error) => {
-                        alert('Error al registrar: ' + error.message);
+                        alert('Error al registrarse: ' + error.message);
                     });
             }
         });
         
         logoutBtn.addEventListener('click', () => {
             signOut(auth).then(() => {
-                console.log('Sesión cerrada correctamente.');
+                console.log('Sesión cerrada correctamente');
             }).catch((error) => {
-                console.error("Error al cerrar sesión:", error);
+                console.error('Error al cerrar sesión:', error);
             });
         });
-        
-        // Manejar el estado de la autenticación
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Usuario autenticado
                 authContainer.style.display = 'none';
-                mainHeader.style.display = 'block';
-                quizContainer.style.display = 'block';
-                navigation.style.display = 'flex';
-                pageNumberElement.style.display = 'flex';
-                logoutBtn.style.display = 'block';
-                console.log('Usuario autenticado:', user);
+                mainHeader.classList.add('show');
+                quizContainer.classList.add('show');
+                navigation.classList.add('show');
+                pageNumberElement.classList.add('show');
+                logoutBtn.classList.add('show');
             } else {
-                // No hay usuario autenticado
                 authContainer.style.display = 'flex';
-                mainHeader.style.display = 'none';
-                quizContainer.style.display = 'none';
-                navigation.style.display = 'none';
-                pageNumberElement.style.display = 'none';
-                logoutBtn.style.display = 'none';
-                console.log('No hay usuario autenticado.');
+                mainHeader.classList.remove('show');
+                quizContainer.classList.remove('show');
+                navigation.classList.remove('show');
+                pageNumberElement.classList.remove('show');
+                logoutBtn.classList.remove('show');
             }
-        });
-
-        // Lógica para mostrar/ocultar las secciones
-        document.addEventListener('DOMContentLoaded', () => {
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    authContainer.style.display = 'none';
-                    mainHeader.style.display = 'block';
-                    quizContainer.style.display = 'block';
-                    navigation.style.display = 'flex';
-                    pageNumberElement.style.display = 'flex';
-                } else {
-                    authContainer.style.display = 'flex';
-                    mainHeader.style.display = 'none';
-                    quizContainer.style.display = 'none';
-                    navigation.style.display = 'none';
-                    pageNumberElement.style.display = 'none';
-                }
-            });
         });
         
-        // --- CÓDIGO ACTUALIZADO: Lógica del Quiz ---
-        document.getElementById('questionList').addEventListener('click', (event) => {
-            // Check if the clicked element is one of our buttons
-            if (event.target.classList.contains('reveal-btn')) {
-                const button = event.target;
-                
-                // Find the parent .question-item and then the .answer within it
-                const questionItem = button.closest('.question-item');
-                const answer = questionItem.querySelector('.answer');
+        // --- 3. LÓGICA DEL QUIZ (sin cambios) ---
 
-                if (answer) {
-                    // Toggle the 'show' class to reveal or hide the answer
-                    answer.classList.toggle('show');
+        const questionsPerPage = 10;
+        let currentPage = 1;
+        let totalPages = 0;
+        let questions = [];
+
+        async function fetchQuestions() {
+            try {
+                const response = await fetch('temari.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                questions = data;
+                totalPages = Math.ceil(questions.length / questionsPerPage);
+                renderQuestions();
+                updatePageInfo();
+                updateProgressBar();
+            } catch (e) {
+                console.error("Error fetching or parsing questions:", e);
+                document.getElementById('questionList').innerHTML = `<p style="text-align: center; color: var(--secondary-color);">No se pudo cargar el temario. Inténtalo de nuevo más tarde.</p>`;
+            }
+        }
+
+        function renderQuestions() {
+            const questionList = document.getElementById('questionList');
+            const startIndex = (currentPage - 1) * questionsPerPage;
+            const endIndex = startIndex + questionsPerPage;
+            const questionsToRender = questions.slice(startIndex, endIndex);
+
+            let html = '';
+            questionsToRender.forEach(q => {
+                html += `
+                    <div class="question-item" data-question-id="${q.id}">
+                        <div class="question-content">
+                            <div class="question-number">${q.id}. ${q.question}</div>
+                            <div class="action-buttons">
+                                <button class="reveal-btn">🤔 Pensar respuesta</button>
+                            </div>
+                            <div class="answer" id="answer-${q.id}">${q.answer}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            questionList.innerHTML = html;
+
+            document.querySelectorAll('.reveal-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const questionItem = e.target.closest('.question-item');
+                    const answer = questionItem.querySelector('.answer');
+                    const questionId = questionItem.dataset.questionId;
                     
-                    // Change the button text based on the answer's state
                     if (answer.classList.contains('show')) {
-                        button.textContent = 'Ocultar respuesta';
-                        button.classList.add('hide');
-                    } else {
+                        answer.classList.remove('show');
                         button.textContent = '🤔 Pensar respuesta';
                         button.classList.remove('hide');
+                        updateProgress(questionId, false);
+                    } else {
+                        answer.classList.add('show');
+                        button.textContent = 'Ocultar respuesta';
+                        button.classList.add('hide');
+                        updateProgress(questionId, true);
                     }
-                }
+                });
+            });
+        }
+        
+        function updatePageInfo() {
+            const pageInfo = document.getElementById('pageNumberHeader');
+            const pageFloat = document.getElementById('pageNumber');
+            
+            if (pageInfo) pageInfo.textContent = currentPage;
+            if (pageFloat) pageFloat.textContent = currentPage;
+
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (prevBtn) prevBtn.disabled = currentPage === 1;
+            if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderQuestions();
+                updatePageInfo();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderQuestions();
+                updatePageInfo();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // --- 4. LÓGICA DE PROGRESO Y ALMACENAMIENTO LOCAL ---
+        function getProgress() {
+            return JSON.parse(localStorage.getItem('quizProgress')) || {};
+        }
+
+        function saveProgress(progress) {
+            localStorage.setItem('quizProgress', JSON.stringify(progress));
+        }
+
+        function updateProgress(questionId, isRevealed) {
+            let progress = getProgress();
+            progress[questionId] = isRevealed;
+            saveProgress(progress);
+            updateProgressBar();
+        }
+
+        function resetProgress() {
+            if (confirm('¿Estás seguro de que quieres reiniciar tu progreso?')) {
+                localStorage.removeItem('quizProgress');
+                updateProgressBar();
+                renderQuestions();
+                alert('Progreso reiniciado.');
+            }
+        }
+
+        function updateProgressBar() {
+            const totalQuestions = questions.length;
+            const progress = getProgress();
+            const revealedCount = Object.values(progress).filter(p => p).length;
+            const percentage = totalQuestions > 0 ? Math.round((revealedCount / totalQuestions) * 100) : 0;
+            
+            document.getElementById('progressPercentage').textContent = `${percentage}%`;
+            document.getElementById('progressBarFill').style.width = `${percentage}%`;
+        }
+        
+        // --- 5. LÓGICA DE PWA (sin cambios) ---
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+        const closeBanner = document.getElementById('closeBanner');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBanner.classList.add('show');
+        });
+
+        installBtn.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('El usuario aceptó instalar la PWA');
+                    } else {
+                        console.log('El usuario rechazó instalar la PWA');
+                    }
+                    deferredPrompt = null;
+                });
             }
         });
 
+        closeBanner.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Fallo el registro del Service Worker:', error);
+                    });
+            });
+        }
+        
+        window.addEventListener('online', () => {
+            document.getElementById('offlineIndicator').classList.remove('show');
+        });
+
+        window.addEventListener('offline', () => {
+            document.getElementById('offlineIndicator').classList.add('show');
+        });
+        
+        // Lógica para el modo oscuro (sin cambios)
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            document.querySelector('.dark-mode-toggle').textContent = isDarkMode ? '☀️' : '🌙';
+        }
+        
+        function loadDarkModePreference() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle').textContent = '☀️';
+            }
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDarkModePreference();
+            fetchQuestions();
+        });
+        
+        // Funciones globales para los botones de navegación
+        window.nextPage = nextPage;
+        window.previousPage = previousPage;
+        window.resetProgress = resetProgress;
+        window.toggleDarkMode = toggleDarkMode;
     </script>
 </body>
 </html>
