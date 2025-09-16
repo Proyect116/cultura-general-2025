@@ -1,0 +1,16 @@
+{
+    "name": "Cultura General 2025",
+    "short_name": "Oposiciones",
+    "description": "Tu libro de estudio para oposiciones con acceso offline.",
+    "start_url": "/cultura-general-2025/index.html",
+    "background_color": "#ffffff",
+    "theme_color": "#2196F3",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
