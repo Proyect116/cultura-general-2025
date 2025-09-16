@@ -765,7 +765,7 @@
                 <div class="question-content">
                     <div class="question-number">32. Brasília és a Brasil com Albània és a...</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('32')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-32">Tirana</div>
             </div>
@@ -775,7 +775,7 @@
                 <div class="question-content">
                     <div class="question-number">33. Quin és el nom de la muntanya més alta d'Espanya?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('33')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-33">Teide</div>
                 </div>
@@ -785,7 +785,7 @@
                 <div class="question-content">
                     <div class="question-number">34. Quin és el país d'origen del "Programa Apollo"?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('34')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-34">Estats Units d'Amèrica</div>
                 </div>
@@ -795,7 +795,7 @@
                 <div class="question-content">
                     <div class="question-number">35. A quin estat pertany la regió insular de Còrsega?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('35')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-35">França</div>
                 </div>
@@ -805,7 +805,7 @@
                 <div class="question-content">
                     <div class="question-number">36. Tegucigalpa és la capital de:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('36')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-36">Hondures</div>
                 </div>
@@ -815,7 +815,7 @@
                 <div class="question-content">
                     <div class="question-number">37. L'autor del llibre "La Colmena" és de:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('37')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-37">Camilo José Cela</div>
                 </div>
@@ -825,7 +825,7 @@
                 <div class="question-content">
                     <div class="question-number">38. La proclamació de la 2a República Espanyola va ser al:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('38')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-38">1931</div>
                 </div>
@@ -835,7 +835,7 @@
                 <div class="question-content">
                     <div class="question-number">39. Quin Nobel d'escriptura castellana ha finat recentment?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('39')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-39">Mario Vargas Llosa</div>
                 </div>
@@ -845,7 +845,7 @@
                 <div class="question-content">
                     <div class="question-number">40. Els propers JJOO es celebren a:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="toggleAnswer('40')">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-40">Los Ángeles</div>
                 </div>
@@ -992,8 +992,31 @@
             });
         });
         
-        // --- 3. LÓGICA DEL QUIZ (EL RESTO DE TU CÓDIGO) ---
-        // ... (tu código para la lógica del quiz, progreso, etc.) ...
+        // --- CÓDIGO ACTUALIZADO: Lógica del Quiz ---
+        document.getElementById('questionList').addEventListener('click', (event) => {
+            // Check if the clicked element is one of our buttons
+            if (event.target.classList.contains('reveal-btn')) {
+                const button = event.target;
+                
+                // Find the parent .question-item and then the .answer within it
+                const questionItem = button.closest('.question-item');
+                const answer = questionItem.querySelector('.answer');
+
+                if (answer) {
+                    // Toggle the 'show' class to reveal or hide the answer
+                    answer.classList.toggle('show');
+                    
+                    // Change the button text based on the answer's state
+                    if (answer.classList.contains('show')) {
+                        button.textContent = 'Ocultar respuesta';
+                        button.classList.add('hide');
+                    } else {
+                        button.textContent = '🤔 Pensar respuesta';
+                        button.classList.remove('hide');
+                    }
+                }
+            }
+        });
 
     </script>
 </body>
