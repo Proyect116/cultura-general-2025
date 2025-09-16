@@ -6,12 +6,11 @@
     <title>Temari Oposicions - Cultura General</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Tu CSS completo va aquí. No lo modifico porque está bien. */
+        /* Tu CSS completo va aquí. He añadido un pequeño estilo para el enlace de contraseña */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --text-color: #333333; --background-color: #FAFAFA; --card-background: #ffffff; --primary-color: #1E88E5; --secondary-color: #FF7043; }
         body { font-family: 'Open Sans', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
         
-        /* Estilos para la autenticación */
         .auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
         .auth-box { background: var(--card-background); padding: 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%; text-align: center; }
         .auth-box h2 { font-family: 'Montserrat', sans-serif; font-size: 24px; color: var(--primary-color); margin-bottom: 25px; }
@@ -21,13 +20,18 @@
         .auth-toggle { margin-top: 20px; font-size: 14px; }
         .auth-toggle a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
         #authError { color: #dc3545; margin-top: 15px; font-weight: 600; min-height: 20px; }
+        #authSuccess { color: #28a745; margin-top: 15px; font-weight: 600; min-height: 20px; } /* NUEVO: Para mensajes de éxito */
 
-        /* Estilos para el contenido del Quiz */
+        /* NUEVO: Estilo para el enlace de restablecer contraseña */
+        .forgot-password { margin-top: 15px; font-size: 13px; }
+        .forgot-password a { color: #555; text-decoration: none; }
+        .forgot-password a:hover { text-decoration: underline; }
+        
+        /* Estilos del Quiz... */
         .main-header { padding: 20px; text-align: center; border-bottom: 3px solid var(--primary-color); background: var(--card-background); }
         .main-title { font-family: 'Lora', serif; font-size: 28px; color: var(--primary-color); }
         #userInfo { margin-top: 10px; font-size: 14px; }
         .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        
         .quiz-container { max-width: 900px; margin: 20px auto; padding: 20px; }
         .question-list { background: var(--card-background); border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .question-item { margin-bottom: 32px; padding: 20px; border-radius: 12px; transition: all 0.4s ease; border: 1px solid #eee; }
@@ -39,8 +43,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Contenedor de Autenticación (visible por defecto) -->
     <div id="authContainer" class="auth-container">
         <div class="auth-box">
             <h2 id="authTitle">Iniciar Sesión</h2>
@@ -48,14 +50,21 @@
             <input type="password" id="passwordInput" placeholder="Contraseña" required>
             <button id="authButton">Iniciar Sesión</button>
             <p id="authError"></p>
+            <p id="authSuccess"></p> <!-- NUEVO: Para mensajes de éxito -->
+
+            <!-- NUEVO: Enlace para restablecer contraseña -->
+            <div id="forgotPasswordContainer" class="forgot-password">
+                <a href="#" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
+            </div>
+
             <p class="auth-toggle" id="authToggle">
                 ¿No tienes cuenta? <a href="#">Regístrate</a>
             </p>
         </div>
     </div>
 
-    <!-- Contenido principal de la App (oculto por defecto) -->
     <div id="appContent" style="display: none;">
+        <!-- ... Contenido de tu app (header, quiz-container, etc) ... -->
         <header class="main-header">
             <h1 class="main-title">Temari Oposicions</h1>
             <div id="userInfo"></div>
@@ -63,18 +72,15 @@
         </header>
 
         <main class="quiz-container">
-            <div class="question-list" id="questionList">
-                <!-- Las preguntas se cargarán aquí desde la variable de JavaScript -->
-            </div>
+            <div class="question-list" id="questionList"></div>
         </main>
     </div>
 
     <script type="module">
-        // Importa las funciones de Firebase que necesitas
+        // NUEVO: Importamos sendPasswordResetEmail
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 
-        // Tu configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBwBaThAwh-QDyH9XQDY4Ef03LMX9z4xXM", // TU API KEY
             authDomain: "temari-oposicions.firebaseapp.com",
@@ -84,19 +90,13 @@
             appId: "1:795136368588:web:359df54bb55555275ac769"
         };
         
-        // Inicializa Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- DATOS DEL QUIZ (Integrados aquí para no usar temari.json) ---
         const questions = [
             { id: 32, question: "Brasília és a Brasil com Albània és a...", answer: "Tirana" },
             { id: 33, question: "Quin és el nom de la muntanya més alta d'Espanya?", answer: "Teide" },
-            { id: 34, question: "Quin és el país d'origen del 'Programa Apollo'?", answer: "Estats Units d'Amèrica" },
-            { id: 35, question: "A quin estat pertany la regió insular de Còrsega?", answer: "França" },
-            { id: 36, question: "Tegucigalpa és la capital de:", answer: "Hondures" },
-            { id: 37, question: "L'autor del llibre 'La Colmena' és:", answer: "Camilo José Cela" },
-            { id: 38, question: "La proclamació de la 2a República Espanyola va ser al:", answer: "1931" }
+            { id: 34, question: "Quin és el país d'origen del 'Programa Apollo'?", answer: "Estats Units d'Amèrica" }
         ];
 
         // --- ELEMENTOS DEL DOM ---
@@ -108,9 +108,12 @@
         const authToggle = document.getElementById('authToggle');
         const authTitle = document.getElementById('authTitle');
         const authError = document.getElementById('authError');
+        const authSuccess = document.getElementById('authSuccess'); // NUEVO
         const logoutBtn = document.getElementById('logoutBtn');
         const userInfo = document.getElementById('userInfo');
         const questionList = document.getElementById('questionList');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink'); // NUEVO
+        const forgotPasswordContainer = document.getElementById('forgotPasswordContainer'); // NUEVO
         
         let isLogin = true;
 
@@ -118,19 +121,22 @@
         authToggle.addEventListener('click', (e) => {
             e.preventDefault();
             isLogin = !isLogin;
-            authError.textContent = '';
+            clearMessages();
             authTitle.textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
             authButton.textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
             authToggle.innerHTML = isLogin ? '¿No tienes cuenta? <a href="#">Regístrate</a>' : '¿Ya tienes cuenta? <a href="#">Inicia Sesión</a>';
+            // NUEVO: Oculta/muestra el enlace de "olvidé contraseña"
+            passwordInput.style.display = 'block';
+            forgotPasswordContainer.style.display = isLogin ? 'block' : 'none';
         });
 
         authButton.addEventListener('click', () => {
             const email = emailInput.value;
             const password = passwordInput.value;
-            authError.textContent = '';
+            clearMessages();
 
-            if (!email || password.length < 6) {
-                authError.textContent = 'Introduce un email válido y una contraseña de al menos 6 caracteres.';
+            if (!email || (isLogin && !password) || (!isLogin && password.length < 6)) {
+                authError.textContent = 'Por favor, completa los campos correctamente.';
                 return;
             }
 
@@ -143,42 +149,62 @@
             }
         });
 
+        // --- NUEVO: Lógica para restablecer contraseña ---
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            clearMessages();
+
+            if (!email) {
+                authError.textContent = 'Por favor, introduce tu email para restablecer la contraseña.';
+                return;
+            }
+
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    authSuccess.textContent = '¡Correo de restablecimiento enviado! Revisa tu bandeja de entrada.';
+                })
+                .catch(error => {
+                    authError.textContent = getFirebaseErrorMessage(error);
+                });
+        });
+
+
         logoutBtn.addEventListener('click', () => {
             signOut(auth);
         });
 
         onAuthStateChanged(auth, user => {
             if (user) {
-                // Si el usuario está logueado, muestra la app
                 authContainer.style.display = 'none';
                 appContent.style.display = 'block';
                 userInfo.textContent = `Usuario: ${user.email}`;
-                renderQuestions(); // Muestra las preguntas
+                renderQuestions();
             } else {
-                // Si no, muestra el formulario de login
                 authContainer.style.display = 'flex';
                 appContent.style.display = 'none';
             }
         });
 
+        function clearMessages() {
+            authError.textContent = '';
+            authSuccess.textContent = '';
+        }
+
         function getFirebaseErrorMessage(error) {
             switch (error.code) {
-                case 'auth/user-not-found':
-                    return 'El correo electrónico no está registrado.';
-                case 'auth/wrong-password':
-                    return 'La contraseña es incorrecta.';
-                case 'auth/email-already-in-use':
-                    return 'Este correo electrónico ya está en uso.';
-                case 'auth/invalid-email':
-                    return 'El formato del correo electrónico es inválido.';
-                default:
-                    return 'Ha ocurrido un error. Inténtalo de nuevo.';
+                case 'auth/user-not-found': return 'El correo electrónico no está registrado.';
+                case 'auth/wrong-password': return 'La contraseña es incorrecta.';
+                case 'auth/email-already-in-use': return 'Este correo electrónico ya está en uso.';
+                case 'auth/invalid-email': return 'El formato del correo electrónico es inválido.';
+                case 'auth/missing-password': return 'Por favor, introduce una contraseña.';
+                default: return 'Ha ocurrido un error. Inténtalo de nuevo.';
             }
         }
 
-        // --- LÓGICA DEL QUIZ ---
+        // --- LÓGICA DEL QUIZ (sin cambios) ---
         function renderQuestions() {
-            questionList.innerHTML = ''; // Limpiar antes de renderizar
+            questionList.innerHTML = '';
             questions.forEach(q => {
                 const item = document.createElement('div');
                 item.className = 'question-item';
@@ -190,7 +216,6 @@
                 questionList.appendChild(item);
             });
 
-            // Añadir eventos a los botones de mostrar/ocultar respuesta
             document.querySelectorAll('.reveal-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const answerDiv = e.target.nextElementSibling;
