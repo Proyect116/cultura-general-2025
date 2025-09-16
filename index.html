@@ -23,18 +23,45 @@
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* --- NUEVO CÓDIGO - VARIABLES y ESTILO de MODO OSCURO --- */
+        :root {
+            --text-color: #333333;
+            --background-color: #FAFAFA;
+            --card-background: #ffffff;
+            --primary-color: #1E88E5;
+            --secondary-color: #FF7043;
+            --positive-color: #81C784;
+            --progress-color: #2c974b;
+            --button-bg: #1E88E5;
+            --button-hover: #1976D2;
+        }
+        
+        .dark-mode {
+            --text-color: #e0e0e0;
+            --background-color: #121212;
+            --card-background: #1f1f1f;
+            --primary-color: #64B5F6;
+            --secondary-color: #FFB74D;
+            --positive-color: #AED581;
+            --progress-color: #4CAF50;
+            --button-bg: #616161;
+            --button-hover: #424242;
+        }
+        /* --- FIN NUEVO CÓDIGO --- */
         
         body {
             font-family: 'Open Sans', sans-serif;
-            background-color: #FAFAFA;
-            color: #333333;
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
         
         /* PWA Install Banner */
         .install-banner {
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 50%, #0D47A1 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1976D2 50%, #0D47A1 100%);
             color: white;
             padding: 16px 20px;
             display: none;
@@ -61,7 +88,7 @@
         
         .install-btn {
             background: white;
-            color: #1E88E5;
+            color: var(--primary-color);
             border: none;
             padding: 10px 20px;
             border-radius: 25px;
@@ -99,10 +126,10 @@
         
         /* Header principal con tu estilo */
         .main-header {
-            background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--background-color) 100%);
             padding: 30px 20px;
             text-align: center;
-            border-bottom: 3px solid #1E88E5;
+            border-bottom: 3px solid var(--primary-color);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -113,7 +140,7 @@
             font-family: 'Lora', serif;
             font-size: 28px;
             font-weight: 600;
-            color: #1E88E5;
+            color: var(--primary-color);
             margin-bottom: 8px;
             text-shadow: 0 2px 4px rgba(30, 136, 229, 0.1);
         }
@@ -121,27 +148,27 @@
         .main-subtitle {
             font-family: 'Open Sans', sans-serif;
             font-size: 16px;
-            color: #1E88E5;
+            color: var(--primary-color);
             margin-bottom: 16px;
             opacity: 0.9;
         }
         
         .page-info {
             font-size: 14px;
-            color: #666;
+            color: var(--text-color);
             margin-bottom: 8px;
         }
         
         .page-number-header {
             font-size: 18px;
             font-weight: 600;
-            color: #FF7043;
+            color: var(--secondary-color);
             text-shadow: 0 1px 3px rgba(255, 112, 67, 0.2);
         }
         
         /* Container principal con tu estilo */
         .quiz-container {
-            background: #FAFAFA;
+            background: var(--background-color);
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
@@ -150,7 +177,7 @@
         
         /* Lista de preguntas con tu estilo mejorado */
         .question-list {
-            background: white;
+            background: var(--card-background);
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -197,7 +224,7 @@
         }
         
         .question-number {
-            color: #1E88E5;
+            color: var(--primary-color);
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
             font-size: 16px;
@@ -214,7 +241,7 @@
         }
         
         .question-text {
-            color: #333333;
+            color: var(--text-color);
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 16px;
@@ -234,12 +261,12 @@
             opacity: 1;
             max-height: 120px;
             margin-top: 16px;
-            color: #FF7043;
+            color: var(--secondary-color);
             font-weight: 600;
             background: linear-gradient(135deg, rgba(255, 112, 67, 0.1) 0%, rgba(255, 112, 67, 0.05) 100%);
             padding: 16px 20px;
             border-radius: 10px;
-            border-left: 4px solid #FF7043;
+            border-left: 4px solid var(--secondary-color);
             box-shadow: 0 3px 12px rgba(255, 112, 67, 0.2);
             position: relative;
         }
@@ -249,7 +276,7 @@
             position: absolute;
             right: 16px;
             top: 16px;
-            color: #FF7043;
+            color: var(--secondary-color);
             font-weight: bold;
             font-size: 18px;
         }
@@ -271,7 +298,7 @@
         }
         
         .reveal-btn {
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1976D2 100%);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -307,7 +334,7 @@
         }
         
         .reveal-btn.hide {
-            background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #F4511E 100%);
             box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3);
         }
         
@@ -325,7 +352,7 @@
         
         .separator-line {
             height: 2px;
-            background: linear-gradient(90deg, transparent, #81C784, transparent);
+            background: linear-gradient(90deg, transparent, var(--positive-color), transparent);
             margin: 15px 0;
             position: relative;
         }
@@ -338,7 +365,7 @@
             transform: translate(-50%, -50%);
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #81C784, #66BB6A);
+            background: linear-gradient(135deg, var(--positive-color), #66BB6A);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -346,12 +373,12 @@
         }
         
         .separator-text {
-            color: #81C784;
+            color: var(--positive-color);
             font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            background: #FAFAFA;
+            background: var(--background-color);
             padding: 8px 16px;
             border-radius: 20px;
             box-shadow: 0 2px 8px rgba(129, 199, 132, 0.2);
@@ -371,10 +398,11 @@
             border-radius: 30px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             border: 1px solid rgba(255,255,255,0.3);
+            transition: background 0.4s ease;
         }
         
         .nav-btn {
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -414,7 +442,7 @@
             position: fixed;
             bottom: 120px;
             right: 30px;
-            background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #F4511E 100%);
             color: white;
             width: 60px;
             height: 60px;
@@ -436,7 +464,7 @@
         }
         
         /* Animaciones */
-        @keyframes slideDown {
+        @keyframes slideDown {  
             from {  
                 transform: translateY(-100%);  
                 opacity: 0;
@@ -447,7 +475,7 @@
             }
         }
         
-        @keyframes pulse {
+        @keyframes pulse {  
             0%, 100% {  
                 transform: scale(1);  
                 opacity: 1;
@@ -527,9 +555,47 @@
             display: block;
             animation: slideDown 0.5s ease;
         }
+
+        /* --- NUEVO CÓDIGO - ESTILO DE PROGRESO Y BOTÓN DE MODO OSCURO --- */
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background-color: var(--card-background);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--progress-color);
+            transition: width 0.3s ease-in-out;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode-toggle:hover {
+            background-color: var(--button-hover);
+        }
     </style>
 </head>
 <body>
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
     <div class="install-banner" id="installBanner">
         <div class="install-text">
             <span>📱</span>
@@ -651,6 +717,7 @@
         <button class="nav-btn" onclick="previousPage()" id="prevBtn">← Anterior</button>
         <button class="nav-btn reset-btn" onclick="resetProgress()">🔄 Reiniciar</button>
         <button class="nav-btn" onclick="nextPage()" id="nextBtn">Següent →</button>
+        <button class="nav-btn dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
     </div>
     
     <div class="page-number" id="pageNumber">4</div>
@@ -702,7 +769,7 @@
         });
 
         // Funciones principales
-        const totalPages = 101;
+        const totalQuestions = 101; // Cambiado para reflejar el total
         let currentPage = 1;
 
         // Cargar el progreso al iniciar
@@ -713,6 +780,11 @@
             }
             updateUI();
             loadRevealedAnswers();
+            // NUEVO CÓDIGO - Cargar preferencia de modo oscuro
+            const darkModePreference = localStorage.getItem('darkMode');
+            if (darkModePreference === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
         });
 
         // Guardar progreso
@@ -774,7 +846,7 @@
         
         // Navegación de páginas
         function nextPage() {
-            if (currentPage < totalPages) {
+            if (currentPage < totalQuestions) {
                 currentPage++;
                 updateUI();
                 saveProgress();
@@ -795,8 +867,26 @@
             document.getElementById('pageNumber').innerText = currentPage;
             document.getElementById('pageNumberHeader').innerText = currentPage;
             document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            document.getElementById('nextBtn').disabled = currentPage === totalQuestions;
+            // NUEVO CÓDIGO - Actualizar barra de progreso
+            updateProgressBar();
         }
+        
+        // --- NUEVO CÓDIGO - FUNCIONES DE PROGRESO Y MODO OSCURO ---
+        function updateProgressBar() {
+            const progressBarFill = document.getElementById('progressBarFill');
+            const progress = (currentPage / totalQuestions) * 100;
+            progressBarFill.style.width = `${progress}%`;
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            // Cambiar el icono del botón
+            document.querySelector('.dark-mode-toggle').innerHTML = isDarkMode ? '☀️' : '🌙';
+        }
+        // --- FIN NUEVO CÓDIGO ---
 
         function showPageMenu() {
             alert('📖 Navegació ràpida: Pròximament en la versió completa.');
