@@ -3,228 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temari Oposicions - Cultura General</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Estudi Oposicions - Temari General</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:wght@600&display=swap" rel="stylesheet">
     <style>
-        /* Tu CSS completo va aquí. He añadido un pequeño estilo para el enlace de contraseña */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --text-color: #333333; --background-color: #FAFAFA; --card-background: #ffffff; --primary-color: #1E88E5; --secondary-color: #FF7043; }
-        body { font-family: 'Open Sans', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
-        
-        .auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
-        .auth-box { background: var(--card-background); padding: 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%; text-align: center; }
-        .auth-box h2 { font-family: 'Montserrat', sans-serif; font-size: 24px; color: var(--primary-color); margin-bottom: 25px; }
-        .auth-box input { width: 100%; padding: 12px 15px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
-        .auth-box button { width: 100%; padding: 15px; border: none; border-radius: 8px; background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease; }
-        .auth-box button:hover { background-color: #1976D2; }
-        .auth-toggle { margin-top: 20px; font-size: 14px; }
-        .auth-toggle a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
-        #authError { color: #dc3545; margin-top: 15px; font-weight: 600; min-height: 20px; }
-        #authSuccess { color: #28a745; margin-top: 15px; font-weight: 600; min-height: 20px; } /* NUEVO: Para mensajes de éxito */
+        :root {
+            /* NUEVA PALETA DE COLORES: Vibrante y moderna */
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --gradient-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --accent-color: #ff7e5f;
+            --text-color: #333;
+            --light-text-color: #f8f9fa;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --success-color: #1dd1a1;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
 
-        /* NUEVO: Estilo para el enlace de restablecer contraseña */
-        .forgot-password { margin-top: 15px; font-size: 13px; }
-        .forgot-password a { color: #555; text-decoration: none; }
-        .forgot-password a:hover { text-decoration: underline; }
-        
-        /* Estilos del Quiz... */
-        .main-header { padding: 20px; text-align: center; border-bottom: 3px solid var(--primary-color); background: var(--card-background); }
-        .main-title { font-family: 'Lora', serif; font-size: 28px; color: var(--primary-color); }
-        #userInfo { margin-top: 10px; font-size: 14px; }
-        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .quiz-container { max-width: 900px; margin: 20px auto; padding: 20px; }
-        .question-list { background: var(--card-background); border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .question-item { margin-bottom: 32px; padding: 20px; border-radius: 12px; transition: all 0.4s ease; border: 1px solid #eee; }
-        .question-number { color: var(--primary-color); font-weight: 600; margin-bottom: 12px; }
-        .answer { color: var(--secondary-color); display: none; margin-top: 16px; padding: 16px; border-radius: 10px; border-left: 4px solid var(--secondary-color); background: rgba(255, 112, 67, 0.1); font-weight: 600; }
-        .answer.show { display: block; }
-        .reveal-btn { background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: all 0.4s ease; margin-top: 16px; }
-        .reveal-btn.hide { background: var(--secondary-color); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- HEADER REDISEÑADO --- */
+        .main-header {
+            background: var(--gradient-bg);
+            color: var(--light-text-color);
+            padding: 25px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .main-title {
+            font-family: 'Lora', serif;
+            font-size: 2.2em;
+            font-weight: 600;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .main-subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .app-container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* --- NUEVO: APARTADO DE IDEAS/CONSEJOS --- */
+        .study-tips-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            border-left: 5px solid var(--primary-color);
+            animation: fadeIn 0.8s ease-out;
+        }
+        .study-tips-card h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        .study-tips-card p {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* --- LISTA DE PREGUNTAS MEJORADA --- */
+        .question-list-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px 30px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .question-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e9ecef;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0; /* Inicia invisible para la animación */
+        }
+        .question-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 10px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .question-number {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .reveal-btn {
+            background: var(--secondary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3);
+        }
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 117, 252, 0.4);
+        }
+        .reveal-btn.hide {
+            background: var(--accent-color);
+            box-shadow: 0 4px 10px rgba(255, 126, 95, 0.3);
+        }
+
+        .answer {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--success-color);
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .answer.show {
+            max-height: 200px;
+            opacity: 1;
+        }
+
+        /* --- NAVEGACIÓN DE PÁGINAS FIJA --- */
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            z-index: 1001;
+        }
+
+        .nav-btn {
+            background: var(--gradient-bg);
+            color: var(--light-text-color);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .page-indicator {
+            align-self: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding: 0 10px;
+        }
+
+        /* --- ANIMACIONES --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            .main-title { font-size: 1.8em; }
+            .study-tips-card h2 { font-size: 1.2em; }
+            .navigation { width: 90%; justify-content: space-between; }
+            .nav-btn { padding: 10px 15px; font-size: 0.9em; }
+            .page-indicator { display: none; }
+        }
     </style>
 </head>
 <body>
-    <div id="authContainer" class="auth-container">
-        <div class="auth-box">
-            <h2 id="authTitle">Iniciar Sesión</h2>
-            <input type="email" id="emailInput" placeholder="Correo electrónico" required>
-            <input type="password" id="passwordInput" placeholder="Contraseña" required>
-            <button id="authButton">Iniciar Sesión</button>
-            <p id="authError"></p>
-            <p id="authSuccess"></p> <!-- NUEVO: Para mensajes de éxito -->
 
-            <!-- NUEVO: Enlace para restablecer contraseña -->
-            <div id="forgotPasswordContainer" class="forgot-password">
-                <a href="#" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
+    <header class="main-header">
+        <h1 class="main-title">Temari Oposicions</h1>
+        <p class="main-subtitle">Cultura General</p>
+    </header>
+
+    <div class="app-container">
+        <!-- NUEVO: Apartado de Consejos para el Estudio -->
+        <div class="study-tips-card">
+            <h2>💡 Consell del Dia</h2>
+            <p><strong>Tècnica Pomodoro:</strong> Estudia intensament durant 25 minuts i després descansa 5. Després de 4 cicles, fes un descans més llarg de 15-30 minuts. Això millora la concentració i evita l'esgotament.</p>
+        </div>
+
+        <div class="question-list-container">
+            <div id="questionList">
+                <!-- Las preguntas se cargarán aquí con JavaScript -->
             </div>
-
-            <p class="auth-toggle" id="authToggle">
-                ¿No tienes cuenta? <a href="#">Regístrate</a>
-            </p>
         </div>
     </div>
 
-    <div id="appContent" style="display: none;">
-        <!-- ... Contenido de tu app (header, quiz-container, etc) ... -->
-        <header class="main-header">
-            <h1 class="main-title">Temari Oposicions</h1>
-            <div id="userInfo"></div>
-            <button id="logoutBtn" class="logout-btn">Cerrar Sesión</button>
-        </header>
-
-        <main class="quiz-container">
-            <div class="question-list" id="questionList"></div>
-        </main>
+    <!-- NUEVO: Navegación de páginas funcional -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn">← Anterior</button>
+        <div class="page-indicator" id="pageIndicator"></div>
+        <button class="nav-btn" id="nextBtn">Següent →</button>
     </div>
 
-    <script type="module">
-        // NUEVO: Importamos sendPasswordResetEmail
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBwBaThAwh-QDyH9XQDY4Ef03LMX9z4xXM", // TU API KEY
-            authDomain: "temari-oposicions.firebaseapp.com",
-            projectId: "temari-oposicions",
-            storageBucket: "temari-oposicions.appspot.com",
-            messagingSenderId: "795136368588",
-            appId: "1:795136368588:web:359df54bb55555275ac769"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        const questions = [
-            { id: 32, question: "Brasília és a Brasil com Albània és a...", answer: "Tirana" },
-            { id: 33, question: "Quin és el nom de la muntanya més alta d'Espanya?", answer: "Teide" },
-            { id: 34, question: "Quin és el país d'origen del 'Programa Apollo'?", answer: "Estats Units d'Amèrica" }
+    <script>
+        // --- BASE DE DATOS DE PREGUNTAS (Todo el temario) ---
+        const allQuestions = [
+            // Página 1
+            { id: 1, question: "Quina és la capital d'Austràlia?", answer: "Canberra" },
+            { id: 2, question: "En quin any va caure el Mur de Berlín?", answer: "1989" },
+            { id: 3, question: "Qui va escriure 'El Quixot'?", answer: "Miguel de Cervantes" },
+            { id: 4, question: "Quin planeta és conegut com el 'Planeta Vermell'?", answer: "Mart" },
+            { id: 5, question: "Quin és l'oceà més gran del món?", answer: "Oceà Pacífic" },
+            // Página 2
+            { id: 6, question: "Qui va pintar la 'Mona Lisa'?", answer: "Leonardo da Vinci" },
+            { id: 7, question: "Quina és la moneda oficial del Japó?", answer: "Ien" },
+            { id: 8, question: "En quin continent es troba Egipte?", answer: "Àfrica" },
+            { id: 9, question: "Quants costats té un hexàgon?", answer: "Sis" },
+            { id: 10, question: "Quin és el riu més llarg del món?", answer: "El riu Amazones" },
+            // Página 3
+            { id: 11, question: "Qui va ser el primer home a trepitjar la Lluna?", answer: "Neil Armstrong" },
+            { id: 12, question: "Quina és la capital de Portugal?", answer: "Lisboa" },
+            { id: 13, question: "Quin instrument mesura la pressió atmosfèrica?", answer: "Baròmetre" },
+            { id: 14, question: "Quina és la fórmula química de l'aigua?", answer: "H₂O" },
+            { id: 15, question: "Qui va descobrir la penicil·lina?", answer: "Alexander Fleming" }
+            // Puedes añadir cientos de preguntas más aquí...
         ];
 
+        // --- CONFIGURACIÓN DE LA PAGINACIÓN ---
+        let currentPage = 1;
+        const questionsPerPage = 5;
+        const totalPages = Math.ceil(allQuestions.length / questionsPerPage);
+
         // --- ELEMENTOS DEL DOM ---
-        const authContainer = document.getElementById('authContainer');
-        const appContent = document.getElementById('appContent');
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const authButton = document.getElementById('authButton');
-        const authToggle = document.getElementById('authToggle');
-        const authTitle = document.getElementById('authTitle');
-        const authError = document.getElementById('authError');
-        const authSuccess = document.getElementById('authSuccess'); // NUEVO
-        const logoutBtn = document.getElementById('logoutBtn');
-        const userInfo = document.getElementById('userInfo');
-        const questionList = document.getElementById('questionList');
-        const forgotPasswordLink = document.getElementById('forgotPasswordLink'); // NUEVO
-        const forgotPasswordContainer = document.getElementById('forgotPasswordContainer'); // NUEVO
-        
-        let isLogin = true;
+        const questionListDiv = document.getElementById('questionList');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageIndicator = document.getElementById('pageIndicator');
 
-        // --- LÓGICA DE AUTENTICACIÓN ---
-        authToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            isLogin = !isLogin;
-            clearMessages();
-            authTitle.textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
-            authButton.textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
-            authToggle.innerHTML = isLogin ? '¿No tienes cuenta? <a href="#">Regístrate</a>' : '¿Ya tienes cuenta? <a href="#">Inicia Sesión</a>';
-            // NUEVO: Oculta/muestra el enlace de "olvidé contraseña"
-            passwordInput.style.display = 'block';
-            forgotPasswordContainer.style.display = isLogin ? 'block' : 'none';
-        });
+        // --- FUNCIÓN PRINCIPAL PARA RENDERIZAR LAS PREGUNTAS ---
+        function renderPage(page) {
+            // Vaciar la lista actual
+            questionListDiv.innerHTML = '';
+            
+            // Calcular qué preguntas mostrar
+            const startIndex = (page - 1) * questionsPerPage;
+            const endIndex = startIndex + questionsPerPage;
+            const questionsToShow = allQuestions.slice(startIndex, endIndex);
 
-        authButton.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            clearMessages();
-
-            if (!email || (isLogin && !password) || (!isLogin && password.length < 6)) {
-                authError.textContent = 'Por favor, completa los campos correctamente.';
-                return;
-            }
-
-            if (isLogin) {
-                signInWithEmailAndPassword(auth, email, password)
-                    .catch(error => authError.textContent = getFirebaseErrorMessage(error));
-            } else {
-                createUserWithEmailAndPassword(auth, email, password)
-                    .catch(error => authError.textContent = getFirebaseErrorMessage(error));
-            }
-        });
-
-        // --- NUEVO: Lógica para restablecer contraseña ---
-        forgotPasswordLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const email = emailInput.value;
-            clearMessages();
-
-            if (!email) {
-                authError.textContent = 'Por favor, introduce tu email para restablecer la contraseña.';
-                return;
-            }
-
-            sendPasswordResetEmail(auth, email)
-                .then(() => {
-                    authSuccess.textContent = '¡Correo de restablecimiento enviado! Revisa tu bandeja de entrada.';
-                })
-                .catch(error => {
-                    authError.textContent = getFirebaseErrorMessage(error);
-                });
-        });
-
-
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth);
-        });
-
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                authContainer.style.display = 'none';
-                appContent.style.display = 'block';
-                userInfo.textContent = `Usuario: ${user.email}`;
-                renderQuestions();
-            } else {
-                authContainer.style.display = 'flex';
-                appContent.style.display = 'none';
-            }
-        });
-
-        function clearMessages() {
-            authError.textContent = '';
-            authSuccess.textContent = '';
-        }
-
-        function getFirebaseErrorMessage(error) {
-            switch (error.code) {
-                case 'auth/user-not-found': return 'El correo electrónico no está registrado.';
-                case 'auth/wrong-password': return 'La contraseña es incorrecta.';
-                case 'auth/email-already-in-use': return 'Este correo electrónico ya está en uso.';
-                case 'auth/invalid-email': return 'El formato del correo electrónico es inválido.';
-                case 'auth/missing-password': return 'Por favor, introduce una contraseña.';
-                default: return 'Ha ocurrido un error. Inténtalo de nuevo.';
-            }
-        }
-
-        // --- LÓGICA DEL QUIZ (sin cambios) ---
-        function renderQuestions() {
-            questionList.innerHTML = '';
-            questions.forEach(q => {
+            // Crear y añadir cada pregunta al DOM
+            questionsToShow.forEach((q, index) => {
                 const item = document.createElement('div');
                 item.className = 'question-item';
+                item.style.animationDelay = `${index * 100}ms`; // Animación escalonada
                 item.innerHTML = `
-                    <div class="question-number">${q.id}. ${q.question}</div>
-                    <button class="reveal-btn">🤔 Mostrar respuesta</button>
+                    <div class="question-header">
+                        <div class="question-number">${q.id}. ${q.question}</div>
+                        <button class="reveal-btn">Mostrar</button>
+                    </div>
                     <div class="answer">${q.answer}</div>
                 `;
-                questionList.appendChild(item);
+                questionListDiv.appendChild(item);
             });
 
+            // Añadir eventos a los botones recién creados
             document.querySelectorAll('.reveal-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const answerDiv = e.target.nextElementSibling;
+                    const answerDiv = e.target.closest('.question-item').querySelector('.answer');
                     const isShown = answerDiv.classList.toggle('show');
-                    e.target.textContent = isShown ? '🙈 Ocultar respuesta' : '🤔 Mostrar respuesta';
+                    e.target.textContent = isShown ? 'Ocultar' : 'Mostrar';
                     e.target.classList.toggle('hide', isShown);
                 });
             });
+
+            updateNavigation();
         }
+
+        // --- FUNCIONES DE NAVEGACIÓN ---
+        function updateNavigation() {
+            pageIndicator.textContent = `Pàgina ${currentPage} de ${totalPages}`;
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        function goToNextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPage(currentPage);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function goToPrevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage(currentPage);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // --- EVENT LISTENERS ---
+        prevBtn.addEventListener('click', goToPrevPage);
+        nextBtn.addEventListener('click', goToNextPage);
+
+        // --- INICIALIZACIÓN DE LA APLICACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPage(currentPage);
+        });
+
     </script>
 </body>
 </html>
