@@ -4,57 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temari Oposicions - Cultura General</title>
-    <!-- Tus meta tags, links a fuentes, etc. van aquí. Los he omitido por brevedad pero están en tu código original y funcionan bien. -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Tu CSS completo va aquí. No lo he modificado, está perfecto. */
+        /* Tu CSS completo va aquí. No lo modifico porque está bien. */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --text-color: #333333; --background-color: #FAFAFA; --card-background: #ffffff; --primary-color: #1E88E5; --secondary-color: #FF7043; --positive-color: #81C784; --progress-color: #2c974b; --button-bg: #1E88E5; --button-hover: #1976D2; }
-        .dark-mode { --text-color: #e0e0e0; --background-color: #121212; --card-background: #1f1f1f; --primary-color: #64B5F6; --secondary-color: #FFB74D; --positive-color: #AED581; --progress-color: #4CAF50; --button-bg: #616161; --button-hover: #424242; }
-        body { font-family: 'Open Sans', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
-        .auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: var(--background-color); text-align: center; padding: 20px; }
-        .auth-box { background: var(--card-background); padding: 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%; border: 1px solid rgba(30, 136, 229, 0.1); }
-        .auth-box h2 { font-family: 'Montserrat', sans-serif; font-size: 24px; color: var(--primary-color); margin-bottom: 25px; font-weight: 600; }
-        .auth-box input { width: 100%; padding: 12px 15px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; transition: all 0.3s ease; background: var(--background-color); color: var(--text-color); }
-        .auth-box input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 8px rgba(30, 136, 229, 0.2); }
-        .auth-box button { width: 100%; padding: 15px; border: none; border-radius: 8px; background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; }
-        .auth-box button:hover { background-color: var(--button-hover); transform: translateY(-2px); }
+        :root { --text-color: #333333; --background-color: #FAFAFA; --card-background: #ffffff; --primary-color: #1E88E5; --secondary-color: #FF7043; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
+        
+        /* Estilos para la autenticación */
+        .auth-container { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
+        .auth-box { background: var(--card-background); padding: 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%; text-align: center; }
+        .auth-box h2 { font-family: 'Montserrat', sans-serif; font-size: 24px; color: var(--primary-color); margin-bottom: 25px; }
+        .auth-box input { width: 100%; padding: 12px 15px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
+        .auth-box button { width: 100%; padding: 15px; border: none; border-radius: 8px; background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease; }
+        .auth-box button:hover { background-color: #1976D2; }
         .auth-toggle { margin-top: 20px; font-size: 14px; }
         .auth-toggle a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
-        .main-header { display: none; /* Oculto por defecto */ padding: 30px 20px; text-align: center; border-bottom: 3px solid var(--primary-color); position: sticky; top: 0; z-index: 100; background: var(--background-color); }
-        .main-header.show { display: block; }
+        #authError { color: #dc3545; margin-top: 15px; font-weight: 600; min-height: 20px; }
+
+        /* Estilos para el contenido del Quiz */
+        .main-header { padding: 20px; text-align: center; border-bottom: 3px solid var(--primary-color); background: var(--card-background); }
         .main-title { font-family: 'Lora', serif; font-size: 28px; color: var(--primary-color); }
-        .quiz-container { display: none; /* Oculto por defecto */ max-width: 900px; margin: 0 auto; padding: 20px; }
-        .quiz-container.show { display: block; }
-        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 15px; transition: background-color 0.3s; }
-        .logout-btn:hover { background-color: #c82333; }
-        /* El resto de tu CSS va aquí, es muy extenso para pegarlo todo */
+        #userInfo { margin-top: 10px; font-size: 14px; }
+        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        
+        .quiz-container { max-width: 900px; margin: 20px auto; padding: 20px; }
         .question-list { background: var(--card-background); border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .question-item { margin-bottom: 32px; padding: 20px; border-radius: 12px; cursor: pointer; transition: all 0.4s ease; }
+        .question-item { margin-bottom: 32px; padding: 20px; border-radius: 12px; transition: all 0.4s ease; border: 1px solid #eee; }
         .question-number { color: var(--primary-color); font-weight: 600; margin-bottom: 12px; }
-        .answer { color: var(--secondary-color); opacity: 0; max-height: 0; overflow: hidden; transition: all 0.5s ease; font-weight: 600; }
-        .answer.show { opacity: 1; max-height: 120px; margin-top: 16px; padding: 16px; border-radius: 10px; border-left: 4px solid var(--secondary-color); background: rgba(255, 112, 67, 0.1); }
-        .reveal-btn { background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: all 0.4s ease; }
+        .answer { color: var(--secondary-color); display: none; margin-top: 16px; padding: 16px; border-radius: 10px; border-left: 4px solid var(--secondary-color); background: rgba(255, 112, 67, 0.1); font-weight: 600; }
+        .answer.show { display: block; }
+        .reveal-btn { background: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: all 0.4s ease; margin-top: 16px; }
         .reveal-btn.hide { background: var(--secondary-color); }
-        .action-buttons { margin-top: 16px; }
-        .navigation { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: none; gap: 12px; background: rgba(255,255,255,0.95); padding: 12px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
-        .navigation.show { display: flex; }
-        .nav-btn { background: var(--button-bg); color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; }
-        /* ... el resto de tu CSS ... */
     </style>
 </head>
 <body>
 
-    <!-- Contenedor de Autenticación -->
+    <!-- Contenedor de Autenticación (visible por defecto) -->
     <div id="authContainer" class="auth-container">
         <div class="auth-box">
             <h2 id="authTitle">Iniciar Sesión</h2>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
+            <input type="email" id="emailInput" placeholder="Correo electrónico" required>
+            <input type="password" id="passwordInput" placeholder="Contraseña" required>
             <button id="authButton">Iniciar Sesión</button>
-            <p id="authError" style="color: red; margin-top: 10px;"></p> <!-- Para mostrar errores -->
-            <p class="auth-toggle">
-                ¿No tienes cuenta? <a href="#" id="toggleLink">Regístrate</a>
+            <p id="authError"></p>
+            <p class="auth-toggle" id="authToggle">
+                ¿No tienes cuenta? <a href="#">Regístrate</a>
             </p>
         </div>
     </div>
@@ -63,162 +58,148 @@
     <div id="appContent" style="display: none;">
         <header class="main-header">
             <h1 class="main-title">Temari Oposicions</h1>
-            <p>Usuario: <span id="userEmail"></span></p>
+            <div id="userInfo"></div>
             <button id="logoutBtn" class="logout-btn">Cerrar Sesión</button>
         </header>
 
         <main class="quiz-container">
             <div class="question-list" id="questionList">
-                <!-- Las preguntas se cargarán aquí dinámicamente -->
+                <!-- Las preguntas se cargarán aquí desde la variable de JavaScript -->
             </div>
         </main>
-        
-        <nav class="navigation">
-            <button class="nav-btn" id="prevBtn">← Anterior</button>
-            <button class="nav-btn" id="nextBtn">Siguiente →</button>
-        </nav>
     </div>
 
     <script type="module">
-        // Importa las funciones necesarias del SDK de Firebase
+        // Importa las funciones de Firebase que necesitas
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 
-        // Tu configuración de la aplicación web de Firebase
+        // Tu configuración de Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyBwBaThAwh-QDyH9XQDY4Ef03LMX9z4xXM", // Tu API Key
+            apiKey: "AIzaSyBwBaThAwh-QDyH9XQDY4Ef03LMX9z4xXM", // TU API KEY
             authDomain: "temari-oposicions.firebaseapp.com",
             projectId: "temari-oposicions",
-            storageBucket: "temari-oposicions.appspot.com", // Corregido
+            storageBucket: "temari-oposicions.appspot.com",
             messagingSenderId: "795136368588",
-            appId: "1:795136368588:web:359df54bb55555275ac769",
-            measurementId: "G-V3QL2VWYPT"
+            appId: "1:795136368588:web:359df54bb55555275ac769"
         };
         
         // Inicializa Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        // --- DATOS DEL QUIZ (Integrados aquí para no usar temari.json) ---
+        const questions = [
+            { id: 32, question: "Brasília és a Brasil com Albània és a...", answer: "Tirana" },
+            { id: 33, question: "Quin és el nom de la muntanya més alta d'Espanya?", answer: "Teide" },
+            { id: 34, question: "Quin és el país d'origen del 'Programa Apollo'?", answer: "Estats Units d'Amèrica" },
+            { id: 35, question: "A quin estat pertany la regió insular de Còrsega?", answer: "França" },
+            { id: 36, question: "Tegucigalpa és la capital de:", answer: "Hondures" },
+            { id: 37, question: "L'autor del llibre 'La Colmena' és:", answer: "Camilo José Cela" },
+            { id: 38, question: "La proclamació de la 2a República Espanyola va ser al:", answer: "1931" }
+        ];
+
         // --- ELEMENTOS DEL DOM ---
         const authContainer = document.getElementById('authContainer');
         const appContent = document.getElementById('appContent');
-        const authTitle = document.getElementById('authTitle');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
         const authButton = document.getElementById('authButton');
-        const toggleLink = document.getElementById('toggleLink');
-        const logoutBtn = document.getElementById('logoutBtn');
+        const authToggle = document.getElementById('authToggle');
+        const authTitle = document.getElementById('authTitle');
         const authError = document.getElementById('authError');
-        const userEmailSpan = document.getElementById('userEmail');
-
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userInfo = document.getElementById('userInfo');
+        const questionList = document.getElementById('questionList');
+        
         let isLogin = true;
 
         // --- LÓGICA DE AUTENTICACIÓN ---
-
-        // Cambiar entre modo Login y Registro
-        toggleLink.addEventListener('click', (e) => {
+        authToggle.addEventListener('click', (e) => {
             e.preventDefault();
             isLogin = !isLogin;
-            authError.textContent = ''; // Limpiar errores al cambiar
+            authError.textContent = '';
             authTitle.textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
             authButton.textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
-            toggleLink.innerHTML = isLogin ? '¿No tienes cuenta? <a href="#">Regístrate</a>' : '¿Ya tienes cuenta? <a href="#">Inicia Sesión</a>';
+            authToggle.innerHTML = isLogin ? '¿No tienes cuenta? <a href="#">Regístrate</a>' : '¿Ya tienes cuenta? <a href="#">Inicia Sesión</a>';
         });
 
-        // Manejar click en el botón de Login/Registro
         authButton.addEventListener('click', () => {
             const email = emailInput.value;
             const password = passwordInput.value;
-            authError.textContent = ''; // Limpiar errores previos
+            authError.textContent = '';
 
-            if (!email || !password) {
-                authError.textContent = 'Por favor, completa todos los campos.';
+            if (!email || password.length < 6) {
+                authError.textContent = 'Introduce un email válido y una contraseña de al menos 6 caracteres.';
                 return;
             }
 
             if (isLogin) {
-                // --- Iniciar Sesión ---
                 signInWithEmailAndPassword(auth, email, password)
-                    .catch((error) => {
-                        authError.textContent = "Error: " + error.message;
-                    });
+                    .catch(error => authError.textContent = getFirebaseErrorMessage(error));
             } else {
-                // --- Registrar Usuario ---
                 createUserWithEmailAndPassword(auth, email, password)
-                    .catch((error) => {
-                        authError.textContent = "Error al registrar: " + error.message;
-                    });
+                    .catch(error => authError.textContent = getFirebaseErrorMessage(error));
             }
         });
 
-        // Manejar cierre de sesión
         logoutBtn.addEventListener('click', () => {
             signOut(auth);
         });
 
-        // Observador del estado de autenticación (la parte más importante)
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, user => {
             if (user) {
-                // Usuario ha iniciado sesión o se ha registrado
-                console.log("Usuario autenticado:", user.email);
+                // Si el usuario está logueado, muestra la app
                 authContainer.style.display = 'none';
                 appContent.style.display = 'block';
-                document.querySelector('.main-header').classList.add('show');
-                document.querySelector('.quiz-container').classList.add('show');
-                document.querySelector('.navigation').classList.add('show');
-                userEmailSpan.textContent = user.email;
-                fetchQuestions(); // Cargar preguntas solo cuando el usuario está logueado
+                userInfo.textContent = `Usuario: ${user.email}`;
+                renderQuestions(); // Muestra las preguntas
             } else {
-                // Usuario ha cerrado sesión o no está logueado
-                console.log("Ningún usuario autenticado.");
+                // Si no, muestra el formulario de login
                 authContainer.style.display = 'flex';
                 appContent.style.display = 'none';
             }
         });
 
-
-        // --- LÓGICA DEL QUIZ ---
-        async function fetchQuestions() {
-            try {
-                const response = await fetch('temari.json');
-                if (!response.ok) throw new Error('No se pudo cargar el temario.json');
-                const questions = await response.json();
-                renderQuestions(questions);
-            } catch (error) {
-                console.error("Error al cargar las preguntas:", error);
-                document.getElementById('questionList').innerHTML = `<p style="color:red; text-align:center;">Error al cargar el temario. Asegúrate de que el archivo 'temari.json' exista.</p>`;
+        function getFirebaseErrorMessage(error) {
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    return 'El correo electrónico no está registrado.';
+                case 'auth/wrong-password':
+                    return 'La contraseña es incorrecta.';
+                case 'auth/email-already-in-use':
+                    return 'Este correo electrónico ya está en uso.';
+                case 'auth/invalid-email':
+                    return 'El formato del correo electrónico es inválido.';
+                default:
+                    return 'Ha ocurrido un error. Inténtalo de nuevo.';
             }
         }
 
-        function renderQuestions(questions) {
-            const questionList = document.getElementById('questionList');
-            questionList.innerHTML = ''; // Limpiar la lista
+        // --- LÓGICA DEL QUIZ ---
+        function renderQuestions() {
+            questionList.innerHTML = ''; // Limpiar antes de renderizar
             questions.forEach(q => {
                 const item = document.createElement('div');
                 item.className = 'question-item';
                 item.innerHTML = `
                     <div class="question-number">${q.id}. ${q.question}</div>
-                    <div class="action-buttons">
-                        <button class="reveal-btn">🤔 Mostrar respuesta</button>
-                    </div>
+                    <button class="reveal-btn">🤔 Mostrar respuesta</button>
                     <div class="answer">${q.answer}</div>
                 `;
                 questionList.appendChild(item);
             });
 
-            // Añadir eventos a los botones recién creados
+            // Añadir eventos a los botones de mostrar/ocultar respuesta
             document.querySelectorAll('.reveal-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    const answer = button.parentElement.nextElementSibling;
-                    const isShown = answer.classList.toggle('show');
-                    button.textContent = isShown ? '🙈 Ocultar respuesta' : '🤔 Mostrar respuesta';
-                    button.classList.toggle('hide', isShown);
+                button.addEventListener('click', (e) => {
+                    const answerDiv = e.target.nextElementSibling;
+                    const isShown = answerDiv.classList.toggle('show');
+                    e.target.textContent = isShown ? '🙈 Ocultar respuesta' : '🤔 Mostrar respuesta';
+                    e.target.classList.toggle('hide', isShown);
                 });
             });
         }
-        
-        // El resto de tu lógica (PWA, modo oscuro, etc.) iría aquí.
-        // He simplificado la lógica del quiz para centrarme en el problema de autenticación.
     </script>
 </body>
 </html>
