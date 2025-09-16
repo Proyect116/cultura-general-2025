@@ -385,11 +385,21 @@
             transition: all 0.4s ease;
             box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
         }
+
+        .nav-btn.reset-btn {
+            background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+        }
         
         .nav-btn:hover {
             background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+        }
+        
+        .nav-btn.reset-btn:hover {
+            background: linear-gradient(135deg, #D70015 0%, #A2000C 100%);
+            box-shadow: 0 6px 20px rgba(255, 59, 48, 0.4);
         }
         
         .nav-btn:disabled {
@@ -538,98 +548,97 @@
     <div class="main-header">
         <h1 class="main-title">Temari Oposicions</h1>
         <div class="main-subtitle">Cultura General</div>
-        <div class="page-info">Pàgina 1</div>
-        <div class="page-number-header">4 de 101</div>
+        <div class="page-info">Pàgina <span id="pageNumberHeader">4</span> de 101</div>
     </div>
     
     <div class="quiz-container">
         <div class="question-list" id="questionList">
             
-            <div class="question-item" onclick="focusQuestion(32)">
+            <div class="question-item" data-question-id="32">
                 <div class="question-content">
                     <div class="question-number">32. Brasília és a Brasil com Albània és a...</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(32)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('32')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-32">Tirana</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(33)">
+            <div class="question-item" data-question-id="33">
                 <div class="question-content">
                     <div class="question-number">33. Quin és el nom de la muntanya més alta d'Espanya?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(33)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('33')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-33">Teide</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(34)">
+            <div class="question-item" data-question-id="34">
                 <div class="question-content">
                     <div class="question-number">34. Quin és el país d'origen del "Programa Apollo"?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(34)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('34')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-34">Estats Units d'Amèrica</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(35)">
+            <div class="question-item" data-question-id="35">
                 <div class="question-content">
                     <div class="question-number">35. A quin estat pertany la regió insular de Còrsega?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(35)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('35')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-35">França</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(36)">
+            <div class="question-item" data-question-id="36">
                 <div class="question-content">
                     <div class="question-number">36. Tegucigalpa és la capital de:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(36)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('36')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-36">Hondures</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(37)">
+            <div class="question-item" data-question-id="37">
                 <div class="question-content">
                     <div class="question-number">37. L'autor del llibre "La Colmena" és de:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(37)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('37')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-37">Camilo José Cela</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(38)">
+            <div class="question-item" data-question-id="38">
                 <div class="question-content">
                     <div class="question-number">38. La proclamació de la 2a República Espanyola va ser al:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(38)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('38')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-38">1931</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(39)">
+            <div class="question-item" data-question-id="39">
                 <div class="question-content">
                     <div class="question-number">39. Quin Nobel d'escriptura castellana ha finat recentment?</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(39)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('39')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-39">Mario Vargas Llosa</div>
                 </div>
             </div>
             
-            <div class="question-item" onclick="focusQuestion(40)">
+            <div class="question-item" data-question-id="40">
                 <div class="question-content">
                     <div class="question-number">40. Els propers JJOO es celebren a:</div>
                     <div class="action-buttons">
-                        <button class="reveal-btn" onclick="event.stopPropagation(); toggleAnswer(40)">🤔 Pensar respuesta</button>
+                        <button class="reveal-btn" onclick="toggleAnswer('40')">🤔 Pensar respuesta</button>
                     </div>
                     <div class="answer" id="answer-40">Los Ángeles</div>
                 </div>
@@ -640,10 +649,11 @@
     
     <div class="navigation">
         <button class="nav-btn" onclick="previousPage()" id="prevBtn">← Anterior</button>
+        <button class="nav-btn reset-btn" onclick="resetProgress()">🔄 Reiniciar</button>
         <button class="nav-btn" onclick="nextPage()" id="nextBtn">Següent →</button>
     </div>
     
-    <div class="page-number" onclick="showPageMenu()">4</div>
+    <div class="page-number" id="pageNumber">4</div>
     
     <script>
         // PWA Installation
@@ -690,8 +700,38 @@
         window.addEventListener('online', () => {
             document.getElementById('offlineIndicator').classList.remove('show');
         });
-        
+
         // Funciones principales
+        const totalPages = 101;
+        let currentPage = 1;
+
+        // Cargar el progreso al iniciar
+        window.addEventListener('load', () => {
+            const savedPage = localStorage.getItem('currentPage');
+            if (savedPage) {
+                currentPage = parseInt(savedPage);
+            }
+            updateUI();
+            loadRevealedAnswers();
+        });
+
+        // Guardar progreso
+        function saveProgress() {
+            localStorage.setItem('currentPage', currentPage);
+            saveRevealedAnswers();
+        }
+
+        // Reiniciar progreso
+        function resetProgress() {
+            if (confirm('Estàs segur que vols reiniciar tot el progrés?')) {
+                localStorage.clear();
+                currentPage = 1;
+                updateUI();
+                window.location.reload(); // Recarga la página para aplicar los cambios
+            }
+        }
+        
+        // Alternar la visibilidad de la respuesta y guardar el estado
         function toggleAnswer(questionId) {
             const answer = document.getElementById(`answer-${questionId}`);
             const btn = answer.parentElement.querySelector('.reveal-btn');
@@ -705,19 +745,63 @@
                 btn.innerHTML = '👁️ Ocultar';
                 btn.classList.add('hide');
             }
+            saveRevealedAnswers();
         }
-        
-        function focusQuestion(questionId) {
-            const questionItem = document.getElementById(`answer-${questionId}`).parentElement.parentElement;
-            questionItem.scrollIntoView({  
-                behavior: 'smooth',  
-                block: 'center'  
+
+        function saveRevealedAnswers() {
+            const revealed = [];
+            document.querySelectorAll('.answer.show').forEach(answer => {
+                const questionId = answer.id.replace('answer-', '');
+                revealed.push(questionId);
+            });
+            localStorage.setItem('revealedAnswers', JSON.stringify(revealed));
+        }
+
+        function loadRevealedAnswers() {
+            const revealed = JSON.parse(localStorage.getItem('revealedAnswers') || '[]');
+            revealed.forEach(questionId => {
+                const answer = document.getElementById(`answer-${questionId}`);
+                if (answer) {
+                    answer.classList.add('show');
+                    const btn = answer.parentElement.querySelector('.reveal-btn');
+                    if (btn) {
+                        btn.innerHTML = '👁️ Ocultar';
+                        btn.classList.add('hide');
+                    }
+                }
             });
         }
         
-        function showPageMenu() {
-            alert('📖 Navegació rà');
+        // Navegación de páginas
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateUI();
+                saveProgress();
+                window.scrollTo(0, 0); // Vuelve al inicio de la página
+            }
         }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateUI();
+                saveProgress();
+                window.scrollTo(0, 0); // Vuelve al inicio de la página
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('pageNumber').innerText = currentPage;
+            document.getElementById('pageNumberHeader').innerText = currentPage;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+
+        function showPageMenu() {
+            alert('📖 Navegació ràpida: Pròximament en la versió completa.');
+        }
+
     </script>
 </body>
 </html>
