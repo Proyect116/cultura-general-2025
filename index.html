@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temario Oposiciones</title>
+    <title>Quiz para Oposiciones</title>
     <style>
+        /* --- Estilos Generales --- */
         * {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif; /* Considera importar esta fuente desde Google Fonts */
             box-sizing: border-box;
         }
 
@@ -21,186 +22,433 @@
             min-height: 100vh;
             padding: 20px;
         }
-
-        .container {
-            background: #fff;
+        
+        /* --- Contenedor Principal de la App --- */
+        .app-container {
             width: 90%;
-            max-width: 400px;
+            max-width: 600px;
+        }
+        
+        /* --- Formulario de Inicio de Sesión --- */
+        .login-container {
+            background: #fff;
+            padding: 40px 30px;
             border-radius: 10px;
-            padding: 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
-        .container h1 {
-            font-size: 25px;
-            color: #007bff;
-            font-weight: 600;
+        .login-container h1 {
             margin-bottom: 20px;
+            color: #007bff;
         }
 
-        .container input {
+        .login-container input {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
+            margin-bottom: 20px;
             border: 1px solid #ced4da;
             border-radius: 6px;
             font-size: 16px;
         }
 
-        .btn {
+        .login-container button {
             background: #007bff;
             color: #fff;
-            font-weight: 500;
-            width: 100%;
-            border: 0;
-            padding: 12px;
-            margin: 10px 0;
+            border: none;
+            padding: 12px 20px;
             border-radius: 6px;
             cursor: pointer;
+            font-size: 16px;
+            width: 100%;
             transition: background-color 0.3s;
         }
 
-        .btn:hover {
+        .login-container button:hover {
             background: #0056b3;
         }
 
-        .toggle-link {
-            display: block;
-            margin-top: 10px;
+        /* --- Quiz y Cabecera de Usuario --- */
+        .quiz-container {
+            display: none; /* Oculto por defecto */
+        }
+        
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .user-info #welcomeMessage {
+            font-size: 16px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        .app {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .app h1 {
+            font-size: 25px;
             color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+            text-align: center;
         }
 
-        .toggle-link:hover {
-            text-decoration: underline;
+        .quiz {
+            padding: 20px 0;
         }
 
-        .forgot-password {
+        #question-text {
+            font-size: 18px;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: #e9ecef;
+            color: #333;
+            font-weight: 500;
+            width: 100%;
+            border: 1px solid #ced4da;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn:hover:not([disabled]) {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .btn:disabled {
+            cursor: no-drop;
+        }
+
+        .btn.correct {
+            background: #28a745;
+            color: #fff;
+            border-color: #218838;
+        }
+
+        .btn.incorrect {
+            background: #dc3545;
+            color: #fff;
+            border-color: #c82333;
+        }
+
+        #next-btn {
+            background: #007bff;
+            color: #fff;
+            font-weight: 500;
+            width: 150px;
+            border: 0;
+            padding: 12px;
+            margin: 20px auto 0;
+            border-radius: 6px;
+            cursor: pointer;
             display: block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
+            transition: background-color 0.3s;
         }
 
-        .forgot-password:hover {
-            text-decoration: underline;
+        #next-btn:hover {
+            background: #0056b3;
         }
 
-        .error {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        #register-form {
+        .hide {
             display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container" id="login-container">
-        <h1>Iniciar Sesión</h1>
-        <input type="text" id="login-username" placeholder="Nombre de usuario" required>
-        <input type="password" id="login-password" placeholder="Contraseña" required>
-        <button class="btn" onclick="login()">Iniciar Sesión</button>
-        <a href="#" class="forgot-password" onclick="forgotPassword()">¿Olvidaste tu contraseña?</a>
-        <a href="#" class="toggle-link" onclick="toggleForm()">Registrarse</a>
-        <div id="login-error" class="error"></div>
+
+<div class="app-container">
+    <!-- Contenedor de Inicio de Sesión -->
+    <div id="login-container" class="login-container">
+        <h1>¡Bienvenido!</h1>
+        <p>Ingresa tu nombre para empezar a estudiar.</p>
+        <br>
+        <input type="text" id="username-input" placeholder="Escribe tu nombre aquí...">
+        <button id="login-btn">Comenzar</button>
     </div>
 
-    <div class="container" id="register-form">
-        <h1>Registrarse</h1>
-        <input type="text" id="register-username" placeholder="Nombre de usuario" required>
-        <input type="email" id="register-email" placeholder="Correo electrónico" required>
-        <input type="password" id="register-password" placeholder="Contraseña" required>
-        <button class="btn" onclick="register()">Registrarse</button>
-        <a href="#" class="toggle-link" onclick="toggleForm()">Iniciar Sesión</a>
-        <div id="register-error" class="error"></div>
+    <!-- Contenedor del Quiz (inicialmente oculto) -->
+    <div id="quiz-container" class="quiz-container">
+        <div class="user-info">
+            <span id="welcomeMessage"></span>
+            <button id="logoutButton" class="logout-btn">Cerrar Sesión</button>
+        </div>
+
+        <div class="app">
+            <h1>Quiz de Seguridad</h1>
+            <div class="quiz">
+                <h2 id="question-text">Pregunta...</h2>
+                <div id="answer-buttons"></div>
+                <button id="next-btn" class="hide">Siguiente</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        function toggleForm() {
-            const loginForm = document.getElementById('login-container');
-            const registerForm = document.getElementById('register-form');
-            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
-            registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
+<script>
+    // --- ELEMENTOS DEL DOM ---
+    const loginContainer = document.getElementById("login-container");
+    const quizContainer = document.getElementById("quiz-container");
+    const loginButton = document.getElementById("login-btn");
+    const usernameInput = document.getElementById("username-input");
+    const welcomeMessage = document.getElementById("welcomeMessage");
+    const logoutButton = document.getElementById("logoutButton");
+
+    const questionElement = document.getElementById("question-text");
+    const answerButtons = document.getElementById("answer-buttons");
+    const nextButton = document.getElementById("next-btn");
+
+    // --- DATOS DEL QUIZ ---
+    const questions = [
+        {
+            question: "¿Qué es el 'phishing'?",
+            answers: [
+                { text: "Un tipo de virus informático.", correct: false },
+                { text: "Un método para robar información personal, como contraseñas, a través de correos electrónicos falsos.", correct: true },
+                { text: "Una técnica de programación.", correct: false },
+                { text: "Un tipo de firewall.", correct: false }
+            ]
+        },
+        // ... (el resto de tus preguntas van aquí)
+        {
+            question: "¿Cuál de las siguientes es una contraseña segura?",
+            answers: [
+                { text: "123456", correct: false },
+                { text: "password123", correct: false },
+                { text: "MiNombre1!", correct: false },
+                { text: "G00gl3-S3cur3-Pa$$w0rd", correct: true }
+            ]
+        },
+        {
+            question: "¿Qué medida de seguridad es fundamental para proteger tu red Wi-Fi en casa?",
+            answers: [
+                { text: "Dejarla sin contraseña para un acceso fácil.", correct: false },
+                { text: "Utilizar un nombre de red (SSID) muy común.", correct: false },
+                { text: "Cambiar la contraseña por defecto del router y usar una encriptación fuerte (WPA3).", correct: true },
+                { text: "Compartir la contraseña con todos los vecinos.", correct: false }
+            ]
+        },
+        {
+            question: "¿Qué es la autenticación de dos factores (2FA)?",
+            answers: [
+                { text: "Iniciar sesión con tu nombre de usuario y contraseña dos veces.", correct: false },
+                { text: "Un método de seguridad que requiere dos formas de verificación para acceder a una cuenta.", correct: true },
+                { text: "Usar dos navegadores diferentes para iniciar sesión.", correct: false },
+                { text: "Compartir tu contraseña con dos amigos de confianza.", correct: false }
+            ]
+        },
+        {
+            question: "¿Qué tipo de software se instala sin tu conocimiento y roba información personal?",
+            answers: [
+                { text: "Antivirus.", correct: false },
+                { text: "Firewall.", correct: false },
+                { text: "Malware (software malicioso).", correct: true },
+                { text: "Sistema operativo.", correct: false }
+            ]
+        },
+    ];
+
+    // --- ESTADO DEL QUIZ ---
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // --- GESTIÓN DE SESIÓN Y ESTADO DEL QUIZ ---
+
+    // Función para guardar el progreso en localStorage
+    function saveState() {
+        const state = {
+            currentQuestionIndex: currentQuestionIndex,
+            score: score,
+        };
+        localStorage.setItem('quizState', JSON.stringify(state));
+    }
+    
+    // Función para cargar el progreso desde localStorage
+    function loadState() {
+        const savedState = JSON.parse(localStorage.getItem('quizState'));
+        if (savedState) {
+            currentQuestionIndex = savedState.currentQuestionIndex;
+            score = savedState.score;
+        }
+    }
+    
+    // Función para manejar el inicio de sesión
+    function handleLogin() {
+        const username = usernameInput.value.trim();
+        if (username) {
+            localStorage.setItem('username', username);
+            checkSession();
+        } else {
+            alert("Por favor, ingresa un nombre.");
+        }
+    }
+
+    // Función para manejar el cierre de sesión
+    function handleLogout() {
+        // Borramos el nombre de usuario y el progreso del quiz
+        localStorage.removeItem('username');
+        localStorage.removeItem('quizState');
+        // Reseteamos las variables de estado
+        currentQuestionIndex = 0;
+        score = 0;
+        // Volvemos a la pantalla de login
+        checkSession();
+    }
+    
+    // Comprueba si hay una sesión activa al cargar la página
+    function checkSession() {
+        const username = localStorage.getItem('username');
+        if (username) {
+            // Si hay usuario, muestra el quiz y oculta el login
+            loginContainer.style.display = "none";
+            quizContainer.style.display = "block";
+            welcomeMessage.textContent = `¡Hola, ${username}!`;
+            startQuiz(); // Inicia el quiz
+        } else {
+            // Si no hay usuario, muestra el login y oculta el quiz
+            loginContainer.style.display = "block";
+            quizContainer.style.display = "none";
+        }
+    }
+    
+    // --- LÓGICA DEL QUIZ ---
+
+    function startQuiz() {
+        // Carga el progreso guardado antes de empezar
+        loadState();
+        nextButton.innerHTML = "Siguiente";
+        showQuestion();
+    }
+
+    function showQuestion() {
+        resetState();
+        if (currentQuestionIndex >= questions.length) {
+            // Si ya no hay más preguntas, muestra la puntuación.
+            showScore();
+            return;
         }
 
-        function register() {
-            const username = document.getElementById('register-username').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const errorMessage = document.getElementById('register-error');
+        let currentQuestion = questions[currentQuestionIndex];
+        let questionNo = currentQuestionIndex + 1;
+        questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
 
-            if (!username || !email || !password) {
-                errorMessage.textContent = 'Por favor, completa todos los campos.';
-                return;
+        currentQuestion.answers.forEach(answer => {
+            const button = document.createElement("button");
+            button.innerHTML = answer.text;
+            button.classList.add("btn");
+            answerButtons.appendChild(button);
+            if (answer.correct) {
+                button.dataset.correct = "true";
             }
-
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            if (users.find(user => user.username === username)) {
-                errorMessage.textContent = 'El usuario ya existe.';
-                return;
-            }
-
-            users.push({ username, email, password });
-            localStorage.setItem('users', JSON.stringify(users));
-            alert('Registro exitoso. Ahora inicia sesión.');
-            toggleForm();
-        }
-
-        function login() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const errorMessage = document.getElementById('login-error');
-
-            if (!username || !password) {
-                errorMessage.textContent = 'Por favor, completa todos los campos.';
-                return;
-            }
-
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.username === username && u.password === password);
-            if (user) {
-                localStorage.setItem('username', username);
-                window.location.href = 'quiz.html';
-            } else {
-                errorMessage.textContent = 'Credenciales incorrectas.';
-            }
-        }
-
-        function forgotPassword() {
-            const email = prompt('Ingresa tu correo electrónico para restablecer la contraseña:');
-            if (email) {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const userIndex = users.findIndex(u => u.email === email);
-                if (userIndex !== -1) {
-                    const newPassword = prompt('Ingresa una nueva contraseña:');
-                    if (newPassword) {
-                        users[userIndex].password = newPassword;
-                        localStorage.setItem('users', JSON.stringify(users));
-                        alert('Contraseña restablecida exitosamente.');
-                    }
-                } else {
-                    alert('Correo no registrado.');
-                }
-            } else {
-                alert('Por favor, ingresa un correo válido.');
-            }
-        }
-
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                if (document.getElementById('login-container').style.display !== 'none') {
-                    login();
-                } else {
-                    register();
-                }
-            }
+            button.addEventListener("click", selectAnswer);
         });
-    </script>
+    }
+
+    function resetState() {
+        nextButton.classList.add("hide");
+        while (answerButtons.firstChild) {
+            answerButtons.removeChild(answerButtons.firstChild);
+        }
+    }
+
+    function selectAnswer(e) {
+        const selectedBtn = e.target;
+        const isCorrect = selectedBtn.dataset.correct === "true";
+        if (isCorrect) {
+            selectedBtn.classList.add("correct");
+            score++;
+        } else {
+            selectedBtn.classList.add("incorrect");
+        }
+        
+        Array.from(answerButtons.children).forEach(button => {
+            if (button.dataset.correct === "true") {
+                button.classList.add("correct");
+            }
+            button.disabled = true;
+        });
+        
+        nextButton.classList.remove("hide");
+    }
+
+    function showScore() {
+        resetState();
+        questionElement.innerHTML = `¡Completado! <br> Has respondido correctamente a ${score} de ${questions.length} preguntas.`;
+        nextButton.innerHTML = "Reiniciar Quiz";
+        nextButton.classList.remove("hide");
+        
+        // Al terminar, borramos el progreso para que la próxima vez empiece de cero
+        localStorage.removeItem('quizState');
+    }
+
+    function handleNextButton() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            // Guarda el estado antes de mostrar la siguiente pregunta
+            saveState();
+            showQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    // --- EVENT LISTENERS ---
+    
+    loginButton.addEventListener('click', handleLogin);
+    logoutButton.addEventListener('click', handleLogout);
+
+    nextButton.addEventListener("click", () => {
+        // Si el texto del botón es "Reiniciar Quiz", significa que hemos terminado
+        if (nextButton.innerHTML === "Reiniciar Quiz") {
+            currentQuestionIndex = 0;
+            score = 0;
+            saveState(); // Guardamos el estado reseteado
+            startQuiz();
+        } else {
+            handleNextButton();
+        }
+    });
+
+    // --- INICIALIZACIÓN ---
+    // Al cargar la página, comprueba la sesión del usuario
+    document.addEventListener('DOMContentLoaded', checkSession);
+
+</script>
 </body>
 </html>
