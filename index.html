@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz de Seguridad</title>
+    <title>Preparación para Oposición en Ciberseguridad</title>
     <style>
         * {
             margin: 0;
@@ -166,12 +166,6 @@
         #restart-btn:hover {
             background: #e0a800;
         }
-
-        .loading {
-            font-size: 16px;
-            color: #555;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -181,7 +175,7 @@
     </div>
 
     <div class="app">
-        <h1>Quiz de Seguridad</h1>
+        <h1>Preparación para Oposición en Ciberseguridad</h1>
         <div class="quiz">
             <h2 id="question-text">Cargando...</h2>
             <div id="answer-buttons"></div>
@@ -190,58 +184,58 @@
                 <span id="page-info" class="page-info"></span>
                 <button id="next-btn" class="nav-btn">Siguiente</button>
             </div>
-            <button id="restart-btn">Reiniciar Quiz</button>
+            <button id="restart-btn">Reiniciar Práctica</button>
         </div>
     </div>
 
     <script>
-        // Preguntas del quiz
+        // Preguntas adaptadas para oposición
         const questions = [
             {
-                question: "¿Qué es el 'phishing'?",
+                question: "¿Cuál es el propósito principal de un sistema de detección y respuesta en endpoints (EDR) en comparación con un antivirus tradicional?",
                 answers: [
-                    { text: "Un tipo de virus informático.", correct: false },
-                    { text: "Un método para robar información personal, como contraseñas, a través de correos electrónicos falsos.", correct: true },
-                    { text: "Una técnica de programación.", correct: false },
-                    { text: "Un tipo de firewall.", correct: false }
+                    { text: "Detección de virus, gusanos y troyanos.", correct: false },
+                    { text: "Interacción con otras herramientas de seguridad como SIEM o IPS/IDS.", correct: true },
+                    { text: "Incorporación de sistemas de mensajería instantánea.", correct: false },
+                    { text: "Mayor simplicidad en su despliegue y configuración.", correct: false }
                 ]
             },
             {
-                question: "¿Cuál de las siguientes es una contraseña segura?",
+                question: "Según las medidas de seguridad del Esquema Nacional de Seguridad, ¿en qué categoría de sistemas es obligatorio emplear cortafuegos de diferentes fabricantes en cascada?",
                 answers: [
-                    { text: "123456", correct: false },
-                    { text: "password123", correct: false },
-                    { text: "MiNombre1!", correct: false },
-                    { text: "G00gl3-S3cur3-Pa$$w0rd", correct: true }
+                    { text: "Sistemas de Categoría Básica o superior.", correct: false },
+                    { text: "Sistemas de Categoría Media o superior.", correct: false },
+                    { text: "Sistemas de Categoría Alta.", correct: true },
+                    { text: "No es un requisito obligatorio en ninguna categoría.", correct: false }
                 ]
             },
             {
-                question: "¿Qué medida de seguridad es fundamental para proteger tu red Wi-Fi en casa?",
+                question: "¿Qué entidad es responsable de crear el 'Authorization Grant' en el marco del protocolo OAuth 2.0?",
                 answers: [
-                    { text: "Dejarla sin contraseña para un acceso fácil.", correct: false },
-                    { text: "Utilizar un nombre de red (SSID) muy común.", correct: false },
-                    { text: "Cambiar la contraseña por defecto del router y usar una encriptación fuerte (WPA3).", correct: true },
-                    { text: "Compartir la contraseña con todos los vecinos.", correct: false }
+                    { text: "El cliente.", correct: false },
+                    { text: "El propietario del recurso.", correct: false },
+                    { text: "El servidor de autorización.", correct: true },
+                    { text: "El servidor del recurso.", correct: false }
                 ]
             },
             {
-                question: "¿Qué es la autenticación de dos factores (2FA)?",
+                question: "¿Cuál de las siguientes afirmaciones sobre la gestión de incidentes de seguridad es correcta según la taxonomía de INCIBE?",
                 answers: [
-                    { text: "Iniciar sesión con tu nombre de usuario y contraseña dos veces.", correct: false },
-                    { text: "Un método de seguridad que requiere dos formas de verificación para acceder a una cuenta.", correct: true },
-                    { text: "Usar dos navegadores diferentes para iniciar sesión.", correct: false },
-                    { text: "Compartir tu contraseña con dos amigos de confianza.", correct: false }
+                    { text: "El robo se clasifica como un incidente de intrusión.", correct: false },
+                    { text: "La ingeniería social se clasifica como escaneo de redes.", correct: false },
+                    { text: "El análisis de paquetes (sniffing) se clasifica como intrusión.", correct: false },
+                    { text: "El escaneo de redes (scanning) se clasifica como intrusión.", correct: true }
                 ]
             },
             {
-                question: "¿Qué tipo de software se instala sin tu conocimiento y roba información personal?",
+                question: "¿Qué principio rector incluye la Estrategia Nacional de Ciberseguridad 2019 según la Orden PCI 487/2019?",
                 answers: [
-                    { text: "Antivirus.", correct: false },
-                    { text: "Firewall.", correct: false },
-                    { text: "Malware (software malicioso).", correct: true },
-                    { text: "Sistema operativo.", correct: false }
+                    { text: "Gestión de Riesgos y Continuidad de Operaciones.", correct: false },
+                    { text: "Unidad de Acción, Anticipación, Eficiencia y Resiliencia.", correct: true },
+                    { text: "Formación, Prevención y Liderazgo Tecnológico.", correct: false },
+                    { text: "Garantía de derechos y Concienciación.", correct: false }
                 ]
-            },
+            }
         ];
 
         // Elementos del DOM
@@ -275,15 +269,14 @@
             window.location.href = 'index.html';
         });
 
-        // Iniciar el quiz
+        // Iniciar la práctica
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
             answeredQuestions.fill(false);
             selectedAnswers.fill(null);
             restartButton.style.display = "none";
-            questionElement.textContent = "Cargando...";
-            setTimeout(showQuestion, 0); // Asegura que la UI se actualice inmediatamente
+            showQuestion();
         }
 
         // Mostrar pregunta actual
