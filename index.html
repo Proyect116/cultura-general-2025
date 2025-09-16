@@ -103,7 +103,7 @@
         }
 
         .btn:disabled {
-            cursor: no-drop;
+            cursor: not-allowed;
         }
 
         .btn.correct {
@@ -118,31 +118,57 @@
             border-color: #c82333;
         }
 
-        #next-btn {
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
             background: #007bff;
             color: #fff;
             font-weight: 500;
-            width: 150px;
             border: 0;
-            padding: 12px;
-            margin: 20px auto 0;
+            padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
-            display: block;
             transition: background-color 0.3s;
         }
 
-        #next-btn:hover {
+        .nav-btn:hover {
             background: #0056b3;
         }
 
-        #next-btn.hide {
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            font-size: 16px;
+            color: #555;
+        }
+
+        #restart-btn {
+            background: #ffc107;
+            color: #333;
+            font-weight: 500;
+            border: 0;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 20px auto;
             display: none;
+        }
+
+        #restart-btn:hover {
+            background: #e0a800;
         }
     </style>
 </head>
 <body>
-
     <div class="user-info">
         <span id="welcomeMessage"></span>
         <button id="logoutButton" class="logout-btn">Cerrar Sesión</button>
@@ -152,33 +178,18 @@
         <h1>Quiz de Seguridad</h1>
         <div class="quiz">
             <h2 id="question-text">Pregunta...</h2>
-            <div id="answer-buttons">
-                <button class="btn">Respuesta 1</button>
-                <button class="btn">Respuesta 2</button>
-                <button class="btn">Respuesta 3</button>
-                <button class="btn">Respuesta 4</button>
+            <div id="answer-buttons"></div>
+            <div class="navigation">
+                <button id="prev-btn" class="nav-btn">Atrás</button>
+                <span id="page-info" class="page-info"></span>
+                <button id="next-btn" class="nav-btn">Siguiente</button>
             </div>
-            <button id="next-btn">Siguiente</button>
+            <button id="restart-btn">Reiniciar Quiz</button>
         </div>
     </div>
 
     <script>
-        // Lógica de sesión
-        window.onload = function() {
-            const username = localStorage.getItem('username');
-            if (username) {
-                document.getElementById('welcomeMessage').textContent = `Bienvenido, ${username}!`;
-            } else {
-                window.location.href = 'index.html'; // Redirige si no hay sesión iniciada
-            }
-        };
-
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            localStorage.removeItem('username');
-            window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
-        });
-
-        // Definición de las preguntas del quiz
+        // Preguntas del quiz
         const questions = [
             {
                 question: "¿Qué es el 'phishing'?",
@@ -227,52 +238,82 @@
             },
         ];
 
-        // Asignación de elementos del DOM a variables
+        // Elementos del DOM
         const questionElement = document.getElementById("question-text");
         const answerButtons = document.getElementById("answer-buttons");
         const nextButton = document.getElementById("next-btn");
+        const prevButton = document.getElementById("prev-btn");
+        const restartButton = document.getElementById("restart-btn");
+        const pageInfo = document.getElementById("page-info");
 
         let currentQuestionIndex = 0;
         let score = 0;
+        let answeredQuestions = new Array(questions.length).fill(false);
+        let selectedAnswers = new Array(questions.length).fill(null);
 
-        // Función para iniciar el quiz
+        // Verificar sesión
+        window.onload = function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('welcomeMessage').textContent = `Bienvenido, ${username}!`;
+            } else {
+                window.location.href = 'index.html';
+            }
+            startQuiz();
+        };
+
+        // Cerrar sesión
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        });
+
+        // Iniciar el quiz
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
-            nextButton.innerHTML = "Siguiente";
+            answeredQuestions.fill(false);
+            selectedAnswers.fill(null);
+            restartButton.style.display = "none";
+            updateNavigation();
             showQuestion();
         }
 
-        // Función para mostrar la pregunta actual
+        // Mostrar pregunta actual
         function showQuestion() {
             resetState();
             let currentQuestion = questions[currentQuestionIndex];
-            let questionNo = currentQuestionIndex + 1;
-            questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+            questionElement.innerHTML = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
 
-            currentQuestion.answers.forEach(answer => {
+            currentQuestion.answers.forEach((answer, index) => {
                 const button = document.createElement("button");
                 button.innerHTML = answer.text;
                 button.classList.add("btn");
-                answerButtons.appendChild(button);
                 if (answer.correct) {
                     button.dataset.correct = answer.correct;
                 }
-                button.addEventListener("click", selectAnswer);
+                if (selectedAnswers[currentQuestionIndex] === index) {
+                    button.classList.add(answer.correct ? "correct" : "incorrect");
+                    button.disabled = true;
+                }
+                button.addEventListener("click", () => selectAnswer(index));
+                answerButtons.appendChild(button);
             });
+
+            updateNavigation();
         }
 
-        // Función para resetear el estado y ocultar los botones
+        // Resetear estado
         function resetState() {
-            nextButton.style.display = "none";
             while (answerButtons.firstChild) {
                 answerButtons.removeChild(answerButtons.firstChild);
             }
         }
 
-        // Función para manejar la selección de una respuesta
-        function selectAnswer(e) {
-            const selectedBtn = e.target;
+        // Seleccionar respuesta
+        function selectAnswer(index) {
+            if (answeredQuestions[currentQuestionIndex]) return;
+            const selectedBtn = answerButtons.children[index];
             const isCorrect = selectedBtn.dataset.correct === "true";
             if (isCorrect) {
                 selectedBtn.classList.add("correct");
@@ -280,43 +321,59 @@
             } else {
                 selectedBtn.classList.add("incorrect");
             }
-            Array.from(answerButtons.children).forEach(button => {
+            Array.from(answerButtons.children).forEach((button, i) => {
                 if (button.dataset.correct === "true") {
                     button.classList.add("correct");
                 }
                 button.disabled = true;
             });
-            nextButton.style.display = "block";
+            answeredQuestions[currentQuestionIndex] = true;
+            selectedAnswers[currentQuestionIndex] = index;
+            updateNavigation();
         }
 
-        // Función para mostrar el resultado final
+        // Mostrar resultado final
         function showScore() {
             resetState();
             questionElement.innerHTML = `¡Has respondido correctamente a ${score} de ${questions.length} preguntas!`;
-            nextButton.innerHTML = "Reiniciar Quiz";
-            nextButton.style.display = "block";
+            nextButton.style.display = "none";
+            prevButton.style.display = "none";
+            pageInfo.style.display = "none";
+            restartButton.style.display = "block";
         }
 
-        // Función para manejar el botón "Siguiente" o "Reiniciar"
-        function handleNextButton() {
+        // Actualizar navegación
+        function updateNavigation() {
+            pageInfo.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
+            prevButton.disabled = currentQuestionIndex === 0;
+            nextButton.disabled = !answeredQuestions[currentQuestionIndex];
+            nextButton.textContent = currentQuestionIndex === questions.length - 1 ? "Finalizar" : "Siguiente";
+        }
+
+        // Manejar botón "Siguiente"
+        nextButton.addEventListener("click", () => {
+            if (!answeredQuestions[currentQuestionIndex]) return;
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
                 showQuestion();
             } else {
                 showScore();
             }
-        }
+        });
 
-        nextButton.addEventListener("click", () => {
-            if (currentQuestionIndex < questions.length) {
-                handleNextButton();
-            } else {
-                startQuiz();
+        // Manejar botón "Atrás"
+        prevButton.addEventListener("click", () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
             }
         });
 
-        // Iniciar el quiz al cargar la página
-        startQuiz();
+        // Manejar botón "Reiniciar"
+        restartButton.addEventListener("click", startQuiz);
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
