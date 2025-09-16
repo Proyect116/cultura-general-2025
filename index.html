@@ -136,7 +136,7 @@
             transition: background-color 0.3s;
         }
 
-        .nav-btn:hover {
+        .nav-btn:hover:not([disabled]) {
             background: #0056b3;
         }
 
@@ -166,6 +166,12 @@
         #restart-btn:hover {
             background: #e0a800;
         }
+
+        .loading {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -177,7 +183,7 @@
     <div class="app">
         <h1>Quiz de Seguridad</h1>
         <div class="quiz">
-            <h2 id="question-text">Pregunta...</h2>
+            <h2 id="question-text">Cargando...</h2>
             <div id="answer-buttons"></div>
             <div class="navigation">
                 <button id="prev-btn" class="nav-btn">Atrás</button>
@@ -245,20 +251,21 @@
         const prevButton = document.getElementById("prev-btn");
         const restartButton = document.getElementById("restart-btn");
         const pageInfo = document.getElementById("page-info");
+        const welcomeMessage = document.getElementById("welcomeMessage");
 
         let currentQuestionIndex = 0;
         let score = 0;
         let answeredQuestions = new Array(questions.length).fill(false);
         let selectedAnswers = new Array(questions.length).fill(null);
 
-        // Verificar sesión
+        // Verificar sesión y cargar contenido
         window.onload = function() {
             const username = localStorage.getItem('username');
-            if (username) {
-                document.getElementById('welcomeMessage').textContent = `Bienvenido, ${username}!`;
-            } else {
+            if (!username) {
                 window.location.href = 'index.html';
+                return;
             }
+            welcomeMessage.textContent = `Bienvenido, ${username}!`;
             startQuiz();
         };
 
@@ -275,8 +282,8 @@
             answeredQuestions.fill(false);
             selectedAnswers.fill(null);
             restartButton.style.display = "none";
-            updateNavigation();
-            showQuestion();
+            questionElement.textContent = "Cargando...";
+            setTimeout(showQuestion, 0); // Asegura que la UI se actualice inmediatamente
         }
 
         // Mostrar pregunta actual
@@ -371,9 +378,6 @@
 
         // Manejar botón "Reiniciar"
         restartButton.addEventListener("click", startQuiz);
-    </script>
-</body>
-</html>
     </script>
 </body>
 </html>
